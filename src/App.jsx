@@ -4,28 +4,28 @@ import './App.css';
 function App() {
   const [topNumbers, setTopNumbers] = useState(() => {
     const savedTopNumbers = localStorage.getItem('topNumbers');
-    return savedTopNumbers ? JSON.parse(savedTopNumbers) : ["", "", "", ""];
+    return savedTopNumbers ? JSON.parse(savedTopNumbers) : [0, 0, 0, 0];
   });
 
   const [bottomNumbers, setBottomNumbers] = useState(() => {
     const savedBottomNumbers = localStorage.getItem('bottomNumbers');
-    return savedBottomNumbers ? JSON.parse(savedBottomNumbers) : ["", "", "", ""];
+    return savedBottomNumbers ? JSON.parse(savedBottomNumbers) : [0, 0, 0, 0];
   });
 
   const [percentages, setPercentages] = useState(() => {
     const savedPercentages = localStorage.getItem('percentages');
-    return savedPercentages ? JSON.parse(savedPercentages) : ["", "", "", ""];
+    return savedPercentages ? JSON.parse(savedPercentages) : [0, 0, 0, 0];
   });
 
   const handleNumberChange = (index, isTop, newValue) => {
     if (isTop) {
       const newTopNumbers = [...topNumbers];
-      newTopNumbers[index] = newValue ? Number(newValue) : "";
+      newTopNumbers[index] = Number(newValue);
       setTopNumbers(newTopNumbers);
       localStorage.setItem('topNumbers', JSON.stringify(newTopNumbers));
     } else {
       const newBottomNumbers = [...bottomNumbers];
-      newBottomNumbers[index] = newValue ? Number(newValue) : "";
+      newBottomNumbers[index] = Number(newValue);
       setBottomNumbers(newBottomNumbers);
       localStorage.setItem('bottomNumbers', JSON.stringify(newBottomNumbers));
     }
@@ -36,28 +36,14 @@ function App() {
     const newBottomNumbers = [...bottomNumbers];
     const newPercentages = [];
 
-    // Calcolo dei totali (somma dei primi 3 valori)
-    const topTotal = newTopNumbers.slice(0, 3).reduce((a, b) => a + (b ? Number(b) : 0), 0);
-    const bottomTotal = newBottomNumbers.slice(0, 3).reduce((a, b) => a + (b ? Number(b) : 0), 0);
-    
-    newTopNumbers[3] = topTotal || "";
-    newBottomNumbers[3] = bottomTotal || "";
+    newTopNumbers[3] = newTopNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
+    newBottomNumbers[3] = newBottomNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
 
-    // Calcolo delle percentuali
     for (let i = 0; i < 4; i++) {
-      if (newTopNumbers[i] && newBottomNumbers[i]) {
-        newPercentages[i] = (newBottomNumbers[i] / newTopNumbers[i]) * 100;
-      } else {
-        newPercentages[i] = "";
-      }
+      newPercentages[i] = newTopNumbers[i] !== 0 ? (newBottomNumbers[i] / newTopNumbers[i]) * 100 : 0;
     }
 
-    setTopNumbers(newTopNumbers);
-    setBottomNumbers(newBottomNumbers);
     setPercentages(newPercentages);
-
-    localStorage.setItem('topNumbers', JSON.stringify(newTopNumbers));
-    localStorage.setItem('bottomNumbers', JSON.stringify(newBottomNumbers));
     localStorage.setItem('percentages', JSON.stringify(newPercentages));
   }, [topNumbers.slice(0, 3), bottomNumbers.slice(0, 3)]);
 
@@ -72,7 +58,6 @@ function App() {
             value={topNumbers[0]}
             onChange={(e) => handleNumberChange(0, true, e.target.value)}
             className="number-input"
-            placeholder=""
           />
           <div className="label">D</div>
           <input
@@ -80,7 +65,6 @@ function App() {
             value={topNumbers[2]}
             onChange={(e) => handleNumberChange(2, true, e.target.value)}
             className="number-input"
-            placeholder=""
           />
         </div>
         <div className="column">
@@ -90,7 +74,6 @@ function App() {
             value={topNumbers[1]}
             onChange={(e) => handleNumberChange(1, true, e.target.value)}
             className="number-input"
-            placeholder=""
           />
           <div className="label">T</div>
           <input
@@ -98,8 +81,6 @@ function App() {
             value={topNumbers[3]}
             onChange={(e) => handleNumberChange(3, true, e.target.value)}
             className="number-input"
-            placeholder=""
-            readOnly
           />
         </div>
       </div>
@@ -112,7 +93,6 @@ function App() {
             value={bottomNumbers[0]}
             onChange={(e) => handleNumberChange(0, false, e.target.value)}
             className="number-input"
-            placeholder=""
           />
           <div className="percentage-item">
             <div
@@ -122,7 +102,7 @@ function App() {
                 backgroundColor: getColor(percentages[0]),
               }}
             ></div>
-            <span className="percentage-text">{percentages[0]?.toFixed(2) || ""}%</span>
+            <span className="percentage-text">{percentages[0].toFixed(2)}%</span>
           </div>
           <div className="label">D</div>
           <input
@@ -130,7 +110,6 @@ function App() {
             value={bottomNumbers[2]}
             onChange={(e) => handleNumberChange(2, false, e.target.value)}
             className="number-input"
-            placeholder=""
           />
           <div className="percentage-item">
             <div
@@ -140,7 +119,7 @@ function App() {
                 backgroundColor: getColor(percentages[2]),
               }}
             ></div>
-            <span className="percentage-text">{percentages[2]?.toFixed(2) || ""}%</span>
+            <span className="percentage-text">{percentages[2].toFixed(2)}%</span>
           </div>
         </div>
         <div className="column">
@@ -150,7 +129,6 @@ function App() {
             value={bottomNumbers[1]}
             onChange={(e) => handleNumberChange(1, false, e.target.value)}
             className="number-input"
-            placeholder=""
           />
           <div className="percentage-item">
             <div
@@ -160,7 +138,7 @@ function App() {
                 backgroundColor: getColor(percentages[1]),
               }}
             ></div>
-            <span className="percentage-text">{percentages[1]?.toFixed(2) || ""}%</span>
+            <span className="percentage-text">{percentages[1].toFixed(2)}%</span>
           </div>
           <div className="label">T</div>
           <input
@@ -168,8 +146,6 @@ function App() {
             value={bottomNumbers[3]}
             onChange={(e) => handleNumberChange(3, false, e.target.value)}
             className="number-input"
-            placeholder=""
-            readOnly
           />
           <div className="percentage-item">
             <div
@@ -179,7 +155,7 @@ function App() {
                 backgroundColor: getColor(percentages[3]),
               }}
             ></div>
-            <span className="percentage-text">{percentages[3]?.toFixed(2) || ""}%</span>
+            <span className="percentage-text">{percentages[3].toFixed(2)}%</span>
           </div>
         </div>
       </div>
