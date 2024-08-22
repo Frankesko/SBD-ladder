@@ -23,11 +23,9 @@ function App() {
     const newBottomNumbers = [...bottomNumbers];
     const newPercentages = [];
 
-    // Calculate totals
     newTopNumbers[3] = newTopNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
     newBottomNumbers[3] = newBottomNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
 
-    // Calculate percentages
     for (let i = 0; i < 4; i++) {
       newPercentages[i] = newTopNumbers[i] !== 0 ? (newBottomNumbers[i] / newTopNumbers[i]) * 100 : 0;
     }
@@ -39,50 +37,122 @@ function App() {
 
   return (
     <div className="app">
-      <div className="labels">
-        <span>S</span>
-        <span>B</span>
-        <span>D</span>
-        <span>T</span>
-      </div>
-      <div className="number-container">
-        {topNumbers.map((num, index) => (
+      <div className="section-title">OBIETTIVI:</div>
+      <div className="section">
+        <div className="column">
+          <div className="label">S</div>
           <input
-            key={`top-${index}`}
             type="number"
-            value={num}
-            onChange={(e) => handleNumberChange(index, true, e.target.value)}
+            value={topNumbers[0]}
+            onChange={(e) => handleNumberChange(0, true, e.target.value)}
             className="number-input"
-            readOnly={index === 3}
           />
-        ))}
-      </div>
-      <div className="number-container">
-        {bottomNumbers.map((num, index) => (
+          <div className="label">D</div>
           <input
-            key={`bottom-${index}`}
             type="number"
-            value={num}
-            onChange={(e) => handleNumberChange(index, false, e.target.value)}
+            value={topNumbers[2]}
+            onChange={(e) => handleNumberChange(2, true, e.target.value)}
             className="number-input"
-            readOnly={index === 3}
           />
-        ))}
+        </div>
+        <div className="column">
+          <div className="label">B</div>
+          <input
+            type="number"
+            value={topNumbers[1]}
+            onChange={(e) => handleNumberChange(1, true, e.target.value)}
+            className="number-input"
+          />
+          <div className="label">T</div>
+          <input
+            type="number"
+            value={topNumbers[3]}
+            onChange={(e) => handleNumberChange(3, true, e.target.value)}
+            className="number-input"
+          />
+        </div>
       </div>
-      <div className="percentage-container">
-        {percentages.map((percentage, index) => (
-          <div key={`percentage-${index}`} className="percentage-item">
-            <div className="percentage-bar" style={{ width: `${percentage}%`, backgroundColor: getColor(percentage) }}></div>
-            <span className="percentage-text">{percentage.toFixed(2)}%</span>
+      <div className="section-title">PR:</div>
+      <div className="section">
+        <div className="column">
+          <div className="label">S</div>
+          <input
+            type="number"
+            value={bottomNumbers[0]}
+            onChange={(e) => handleNumberChange(0, false, e.target.value)}
+            className="number-input"
+          />
+          <div className="percentage-item">
+            <div
+              className="percentage-bar"
+              style={{
+                width: `${percentages[0]}%`,
+                backgroundColor: getColor(percentages[0]),
+              }}
+            ></div>
+            <span className="percentage-text">{percentages[0].toFixed(2)}%</span>
           </div>
-        ))}
+          <div className="label">D</div>
+          <input
+            type="number"
+            value={bottomNumbers[2]}
+            onChange={(e) => handleNumberChange(2, false, e.target.value)}
+            className="number-input"
+          />
+          <div className="percentage-item">
+            <div
+              className="percentage-bar"
+              style={{
+                width: `${percentages[2]}%`,
+                backgroundColor: getColor(percentages[2]),
+              }}
+            ></div>
+            <span className="percentage-text">{percentages[2].toFixed(2)}%</span>
+          </div>
+        </div>
+        <div className="column">
+          <div className="label">B</div>
+          <input
+            type="number"
+            value={bottomNumbers[1]}
+            onChange={(e) => handleNumberChange(1, false, e.target.value)}
+            className="number-input"
+          />
+          <div className="percentage-item">
+            <div
+              className="percentage-bar"
+              style={{
+                width: `${percentages[1]}%`,
+                backgroundColor: getColor(percentages[1]),
+              }}
+            ></div>
+            <span className="percentage-text">{percentages[1].toFixed(2)}%</span>
+          </div>
+          <div className="label">T</div>
+          <input
+            type="number"
+            value={bottomNumbers[3]}
+            onChange={(e) => handleNumberChange(3, false, e.target.value)}
+            className="number-input"
+          />
+          <div className="percentage-item">
+            <div
+              className="percentage-bar"
+              style={{
+                width: `${percentages[3]}%`,
+                backgroundColor: getColor(percentages[3]),
+              }}
+            ></div>
+            <span className="percentage-text">{percentages[3].toFixed(2)}%</span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 function getColor(percentage) {
-  const hue = percentage * 1.2; // This will give a red to green gradient
+  const hue = percentage * 1.2;
   return `hsl(${hue}, 100%, 50%)`;
 }
 
