@@ -21,31 +21,25 @@ function App() {
     if (isTop) {
       const newTopNumbers = [...topNumbers];
       newTopNumbers[index] = Number(newValue);
+      newTopNumbers[3] = newTopNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
       setTopNumbers(newTopNumbers);
       localStorage.setItem('topNumbers', JSON.stringify(newTopNumbers));
     } else {
       const newBottomNumbers = [...bottomNumbers];
       newBottomNumbers[index] = Number(newValue);
+      newBottomNumbers[3] = newBottomNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
       setBottomNumbers(newBottomNumbers);
       localStorage.setItem('bottomNumbers', JSON.stringify(newBottomNumbers));
     }
   };
 
   useEffect(() => {
-    const newTopNumbers = [...topNumbers];
-    const newBottomNumbers = [...bottomNumbers];
-    const newPercentages = [];
-
-    newTopNumbers[3] = newTopNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
-    newBottomNumbers[3] = newBottomNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
-
-    for (let i = 0; i < 4; i++) {
-      newPercentages[i] = newTopNumbers[i] !== 0 ? (newBottomNumbers[i] / newTopNumbers[i]) * 100 : 0;
-    }
-
+    const newPercentages = topNumbers.map((top, index) => 
+      top !== 0 ? (bottomNumbers[index] / top) * 100 : 0
+    );
     setPercentages(newPercentages);
     localStorage.setItem('percentages', JSON.stringify(newPercentages));
-  }, [topNumbers.slice(0, 3), bottomNumbers.slice(0, 3)]);
+  }, [topNumbers, bottomNumbers]);
 
   return (
     <div className="app">
@@ -79,7 +73,7 @@ function App() {
           <input
             type="number"
             value={topNumbers[3]}
-            onChange={(e) => handleNumberChange(3, true, e.target.value)}
+            readOnly
             className="number-input"
           />
         </div>
@@ -144,7 +138,7 @@ function App() {
           <input
             type="number"
             value={bottomNumbers[3]}
-            onChange={(e) => handleNumberChange(3, false, e.target.value)}
+            readOnly
             className="number-input"
           />
           <div className="percentage-item">
