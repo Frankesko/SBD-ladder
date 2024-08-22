@@ -2,19 +2,32 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [topNumbers, setTopNumbers] = useState([0, 0, 0, 0]);
-  const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
-  const [percentages, setPercentages] = useState([0, 0, 0, 0]);
+  const [topNumbers, setTopNumbers] = useState(() => {
+    const savedTopNumbers = localStorage.getItem('topNumbers');
+    return savedTopNumbers ? JSON.parse(savedTopNumbers) : [0, 0, 0, 0];
+  });
+
+  const [bottomNumbers, setBottomNumbers] = useState(() => {
+    const savedBottomNumbers = localStorage.getItem('bottomNumbers');
+    return savedBottomNumbers ? JSON.parse(savedBottomNumbers) : [0, 0, 0, 0];
+  });
+
+  const [percentages, setPercentages] = useState(() => {
+    const savedPercentages = localStorage.getItem('percentages');
+    return savedPercentages ? JSON.parse(savedPercentages) : [0, 0, 0, 0];
+  });
 
   const handleNumberChange = (index, isTop, newValue) => {
     if (isTop) {
       const newTopNumbers = [...topNumbers];
       newTopNumbers[index] = Number(newValue);
       setTopNumbers(newTopNumbers);
+      localStorage.setItem('topNumbers', JSON.stringify(newTopNumbers));
     } else {
       const newBottomNumbers = [...bottomNumbers];
       newBottomNumbers[index] = Number(newValue);
       setBottomNumbers(newBottomNumbers);
+      localStorage.setItem('bottomNumbers', JSON.stringify(newBottomNumbers));
     }
   };
 
@@ -30,9 +43,8 @@ function App() {
       newPercentages[i] = newTopNumbers[i] !== 0 ? (newBottomNumbers[i] / newTopNumbers[i]) * 100 : 0;
     }
 
-    setTopNumbers(newTopNumbers);
-    setBottomNumbers(newBottomNumbers);
     setPercentages(newPercentages);
+    localStorage.setItem('percentages', JSON.stringify(newPercentages));
   }, [topNumbers.slice(0, 3), bottomNumbers.slice(0, 3)]);
 
   return (
