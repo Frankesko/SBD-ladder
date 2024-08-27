@@ -31,6 +31,7 @@ function App() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [bw, setBw] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -55,7 +56,8 @@ function App() {
         d: 0,
         sObj: 0,
         bObj: 0,
-        dObj: 0
+        dObj: 0,
+        bw: ''
       });
       loadUserData(lowercaseUsername);
       setCurrentPage('Me');
@@ -69,6 +71,7 @@ function App() {
       const userData = snapshot.val();
       setBottomNumbers([userData.s || 0, userData.b || 0, userData.d || 0, (userData.s || 0) + (userData.b || 0) + (userData.d || 0)]);
       setTopNumbers([userData.sObj || 0, userData.bObj || 0, userData.dObj || 0, (userData.sObj || 0) + (userData.bObj || 0) + (userData.dObj || 0)]);
+      setBw(userData.bw || '');
     }
   };
 
@@ -98,7 +101,8 @@ function App() {
       d: bottomNumbers[2],
       sObj: topNumbers[0],
       bObj: topNumbers[1],
-      dObj: topNumbers[2]
+      dObj: topNumbers[2],
+      bw: bw
     });
     alert('Dati salvati con successo');
   };
@@ -114,6 +118,7 @@ function App() {
         s: userData.s || 0,
         b: userData.b || 0,
         d: userData.d || 0,
+        bw: userData.bw || '',
         total: (userData.s || 0) + (userData.b || 0) + (userData.d || 0)
       });
     });
@@ -307,6 +312,15 @@ function App() {
           </div>
         </div>
       </div>
+      <div className="bw-input">
+        <div className="label">BW</div>
+        <input
+          type="number"
+          value={bw}
+          onChange={(e) => setBw(e.target.value)}
+          className="number-input"
+        />
+      </div>
       <button onClick={handleSave} className="save-button">Salva</button>
     </>
   );
@@ -322,7 +336,8 @@ function App() {
             <span className="score">S: {user.s}</span>
             <span className="score">B: {user.b}</span>
             <span className="score">D: {user.d}</span>
-            <span className="total">Total: {user.total}</span>
+            <span className="bw">BW: {user.bw}</span>
+            <span className="total">Total: <strong>{user.total}</strong></span>
           </li>
         ))}
       </ul>
