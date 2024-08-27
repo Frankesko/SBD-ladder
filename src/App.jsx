@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebase/database';
-import bcrypt from 'bcryptjs';
 import './App.css';
 
 // Configurazione Firebase
@@ -35,18 +34,16 @@ function App() {
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      const isPasswordCorrect = await bcrypt.compare(password, userData.password);
-      if (isPasswordCorrect) {
+      if (userData.password === password) {
         loadUserData(username);
         setCurrentPage('Me');
       } else {
         alert('Password errata');
       }
     } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
       await set(userRef, {
         username,
-        password: hashedPassword,
+        password,
         s: 0,
         b: 0,
         d: 0,
@@ -291,7 +288,11 @@ function App() {
         <div className="menu-bar">
           <button onClick={() => setCurrentPage('Me')}>Me</button>
           <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-          <button onClick={() => setCurrentPage('Login')}>Logout</button>
+          <button onClick={() => {
+            setCurrentPage('Login');
+            setUsername('');
+            setPassword('');
+          }}>Logout</button>
         </div>
       )}
     </div>
