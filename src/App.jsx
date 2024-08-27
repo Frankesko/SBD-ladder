@@ -16,31 +16,10 @@ const db = getDatabase(app);
 function App() {
   const [currentPage, setCurrentPage] = useState('Me');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [topNumbers, setTopNumbers] = useState([0, 0, 0, 0]);
   const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
   const [percentages, setPercentages] = useState([0, 0, 0, 0]);
   const [leaderboard, setLeaderboard] = useState([]);
-
-  useEffect(() => {
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
-      setUsername(savedUsername);
-      setIsLoggedIn(true);
-      loadUserData(savedUsername);
-    }
-  }, []);
-
-  const loadUserData = async (username) => {
-    const userRef = ref(db, `users/${username}`);
-    const snapshot = await get(userRef);
-    if (snapshot.exists()) {
-      const userData = snapshot.val();
-      setTopNumbers([userData.s, userData.b, userData.d, userData.s + userData.b + userData.d]);
-      setBottomNumbers([userData.s, userData.b, userData.d, userData.s + userData.b + userData.d]);
-    }
-  };
 
   const handleNumberChange = (index, isTop, newValue) => {
     const newNumbers = isTop ? [...topNumbers] : [...bottomNumbers];
@@ -60,46 +39,14 @@ function App() {
     setPercentages(newPercentages);
   }, [topNumbers, bottomNumbers]);
 
-  const handleLogin = async () => {
-    const userRef = ref(db, `users/${username}`);
-    const snapshot = await get(userRef);
-    if (snapshot.exists() && snapshot.val().password === password) {
-      setIsLoggedIn(true);
-      localStorage.setItem('username', username);
-      loadUserData(username);
-    } else {
-      alert('Username o password non validi');
-    }
-  };
-
-  const handleRegister = async () => {
-    const userRef = ref(db, `users/${username}`);
-    const snapshot = await get(userRef);
-    if (snapshot.exists()) {
-      alert('Username già in uso');
-    } else {
-      await set(userRef, {
-        username,
-        password,
-        s: 0,
-        b: 0,
-        d: 0
-      });
-      setIsLoggedIn(true);
-      localStorage.setItem('username', username);
-    }
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUsername('');
-    setPassword('');
-    localStorage.removeItem('username');
-  };
-
   const handleSave = async () => {
+    if (!username) {
+      alert('Per favore, inserisci un nome utente');
+      return;
+    }
     const userRef = ref(db, `users/${username}`);
     await update(userRef, {
+      username,
       s: bottomNumbers[0],
       b: bottomNumbers[1],
       d: bottomNumbers[2]
@@ -129,27 +76,15 @@ function App() {
     }
   }, [currentPage]);
 
-  const renderLoginPage = () => (
-    <div className="login-page">
+  const renderMePage = () => (
+    <>
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        placeholder="Il tuo nome"
+        className="username-input"
       />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleRegister}>Registrati</button>
-    </div>
-  );
-
-  const renderMePage = () => (
-    <>
       <div className="section-title">OBIETTIVI:</div>
       <div className="section">
         <div className="column">
@@ -260,7 +195,7 @@ function App() {
           </div>
         </div>
       </div>
-      <button onClick={handleSave}>Salva</button>
+      <button onClick={handleSave} className="save-button">Salva</button>
     </>
   );
 
@@ -279,18 +214,11 @@ function App() {
 
   return (
     <div className="app">
-      {isLoggedIn ? (
-        <>
-          {currentPage === 'Me' ? renderMePage() : renderLeaderboardPage()}
-          <div className="menu-bar">
-            <button onClick={() => setCurrentPage('Me')}>Me</button>
-            <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-        </>
-      ) : (
-        renderLoginPage()
-      )}
+      {currentPage === 'Me' ? renderMePage() : renderLeaderboardPage()}
+      <div className="menu-bar">
+        <button onClick={() => setCurrentPage('Me')}>Me</button>
+        <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
+      </div>
     </div>
   );
 }
