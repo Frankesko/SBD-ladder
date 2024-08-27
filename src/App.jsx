@@ -27,22 +27,26 @@ function App() {
   const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
   const [percentages, setPercentages] = useState([0, 0, 0, 0]);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [newUsername, setNewUsername] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const userRef = ref(db, `users/${username}`);
+    const lowercaseUsername = username.toLowerCase();
+    const userRef = ref(db, `users/${lowercaseUsername}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
       if (userData.password === password) {
-        loadUserData(username);
+        setUsername(userData.username);  // Use the stored username with correct casing
+        loadUserData(lowercaseUsername);
         setCurrentPage('Me');
       } else {
         alert('Password errata');
       }
     } else {
       await set(userRef, {
-        username,
+        username: username,  // Store the original username
         password,
         s: 0,
         b: 0,
@@ -51,13 +55,13 @@ function App() {
         bObj: 0,
         dObj: 0
       });
-      loadUserData(username);
+      loadUserData(lowercaseUsername);
       setCurrentPage('Me');
     }
   };
 
-  const loadUserData = async (username) => {
-    const userRef = ref(db, `users/${username}`);
+  const loadUserData = async (lowercaseUsername) => {
+    const userRef = ref(db, `users/${lowercaseUsername}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
@@ -85,7 +89,7 @@ function App() {
   }, [topNumbers, bottomNumbers]);
 
   const handleSave = async () => {
-    const userRef = ref(db, `users/${username}`);
+    const userRef = ref(db, `users/${username.toLowerCase()}`);
     await update(userRef, {
       s: bottomNumbers[0],
       b: bottomNumbers[1],
@@ -120,6 +124,32 @@ function App() {
       loadLeaderboard();
     }
   }, [currentPage]);
+
+  const handleChangeUsername = async () => {
+    if (newUsername) {
+      const lowercaseNewUsername = newUsername.toLowerCase();
+      const newUserRef = ref(db, `users/${lowercaseNewUsername}`);
+      const snapshot = await get(newUserRef);
+      if (snapshot.exists()) {
+        alert('Username già in uso');
+      } else {
+        const oldUserRef = ref(db, `users/${username.toLowerCase()}`);
+        const userData = (await get(oldUserRef)).val();
+        await set(newUserRef, {...userData, username: newUsername});
+        await set(oldUserRef, null);
+        setUsername(newUsername);
+        alert('Username cambiato con successo');
+      }
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword) {
+      const userRef = ref(db, `users/${username.toLowerCase()}`);
+      await update(userRef, {password: newPassword});
+      alert('Password cambiata con successo');
+    }
+  };
 
   const renderLoginPage = () => (
     <div className="login-page">
@@ -279,20 +309,43 @@ function App() {
     </div>
   );
 
+  const renderProfilePage = () => (
+    <div className="profile-page">
+      <h2>Profilo di {username}</h2>
+      <div>
+        <h3>Cambia Username</h3>
+        <input
+          type="text"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+          placeholder="Nuovo Username"
+        />
+        <button onClick={handleChangeUsername}>Cambia Username</button>
+      </div>
+      <div>
+        <h3>Cambia Password</h3>
+        <input
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          placeholder="Nuova Password"
+        />
+        <button onClick={handleChangePassword}>Cambia Password</button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="app">
       {currentPage === 'Login' && renderLoginPage()}
       {currentPage === 'Me' && renderMePage()}
       {currentPage === 'Leaderboard' && renderLeaderboardPage()}
+      {currentPage === 'Profile' && renderProfilePage()}
       {currentPage !== 'Login' && (
         <div className="menu-bar">
           <button onClick={() => setCurrentPage('Me')}>Me</button>
           <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-          <button onClick={() => {
-            setCurrentPage('Login');
-            setUsername('');
-            setPassword('');
-          }}>Logout</button>
+          <button onClick={() => setCurrentPage('Profile')}>Profilo</button>
         </div>
       )}
     </div>
