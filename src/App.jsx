@@ -26,6 +26,27 @@ function App() {
   const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
   const [percentages, setPercentages] = useState([0, 0, 0, 0]);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [isUsernameLocked, setIsUsernameLocked] = useState(false);
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) {
+      setUsername(savedUsername);
+      setIsUsernameLocked(true);
+      loadUserData(savedUsername);
+    }
+  }, []);
+
+  const loadUserData = async (username) => {
+    const userRef = ref(db, `users/${username}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      setBottomNumbers([userData.s || 0, userData.b || 0, userData.d || 0, (userData.s || 0) + (userData.b || 0) + (userData.d || 0)]);
+      // Aggiorna anche topNumbers se necessario
+      // setTopNumbers([...]);
+    }
+  };
 
   const handleNumberChange = (index, isTop, newValue) => {
     const newNumbers = isTop ? [...topNumbers] : [...bottomNumbers];
@@ -57,19 +78,25 @@ function App() {
       b: bottomNumbers[1],
       d: bottomNumbers[2]
     });
+    localStorage.setItem('username', username);
+    if (!isUsernameLocked) {
+      setIsUsernameLocked(true);
+    }
     alert('Dati salvati con successo');
   };
 
   const loadLeaderboard = async () => {
     const usersRef = ref(db, 'users');
-    const usersQuery = query(usersRef, orderByChild('s'));
-    const snapshot = await get(usersQuery);
+    const snapshot = await get(usersRef);
     const leaderboardData = [];
     snapshot.forEach((childSnapshot) => {
       const userData = childSnapshot.val();
       leaderboardData.push({
         username: userData.username,
-        total: userData.s + userData.b + userData.d
+        s: userData.s || 0,
+        b: userData.b || 0,
+        d: userData.d || 0,
+        total: (userData.s || 0) + (userData.b || 0) + (userData.d || 0)
       });
     });
     leaderboardData.sort((a, b) => b.total - a.total);
@@ -90,7 +117,11 @@ function App() {
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Il tuo nome"
         className="username-input"
+        disabled={isUsernameLocked}
       />
+      {!isUsernameLocked && (
+        <p>Attenzione: una volta salvato, il nome utente non potrà essere cambiato.</p>
+      )}
       <div className="section-title">OBIETTIVI:</div>
       <div className="section">
         <div className="column">
@@ -211,7 +242,7 @@ function App() {
       <ul>
         {leaderboard.map((user, index) => (
           <li key={user.username}>
-            {index + 1}. {user.username} - Total: {user.total}
+            {index + 1}. {user.username} - S: {user.s}, B: {user.b}, D: {user.d}, Total: {user.total}
           </li>
         ))}
       </ul>
