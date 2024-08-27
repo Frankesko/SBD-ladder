@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebase/database';
+import bcrypt from 'bcryptjs';
 import './App.css';
 
 // Configurazione Firebase
@@ -20,22 +21,43 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Me');
+  const [currentPage, setCurrentPage] = useState('Login');
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [topNumbers, setTopNumbers] = useState([0, 0, 0, 0]);
   const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
   const [percentages, setPercentages] = useState([0, 0, 0, 0]);
   const [leaderboard, setLeaderboard] = useState([]);
-  const [isUsernameLocked, setIsUsernameLocked] = useState(false);
 
-  useEffect(() => {
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
-      setUsername(savedUsername);
-      setIsUsernameLocked(true);
-      loadUserData(savedUsername);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const userRef = ref(db, `users/${username}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      const isPasswordCorrect = await bcrypt.compare(password, userData.password);
+      if (isPasswordCorrect) {
+        loadUserData(username);
+        setCurrentPage('Me');
+      } else {
+        alert('Password errata');
+      }
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await set(userRef, {
+        username,
+        password: hashedPassword,
+        s: 0,
+        b: 0,
+        d: 0,
+        sObj: 0,
+        bObj: 0,
+        dObj: 0
+      });
+      loadUserData(username);
+      setCurrentPage('Me');
     }
-  }, []);
+  };
 
   const loadUserData = async (username) => {
     const userRef = ref(db, `users/${username}`);
@@ -43,10 +65,7 @@ function App() {
     if (snapshot.exists()) {
       const userData = snapshot.val();
       setBottomNumbers([userData.s || 0, userData.b || 0, userData.d || 0, (userData.s || 0) + (userData.b || 0) + (userData.d || 0)]);
-      
-      // Carica i dati degli obiettivi dal localStorage
-      const savedTopNumbers = JSON.parse(localStorage.getItem('topNumbers')) || [0, 0, 0, 0];
-      setTopNumbers(savedTopNumbers);
+      setTopNumbers([userData.sObj || 0, userData.bObj || 0, userData.dObj || 0, (userData.sObj || 0) + (userData.bObj || 0) + (userData.dObj || 0)]);
     }
   };
 
@@ -56,7 +75,6 @@ function App() {
     newNumbers[3] = newNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
     if (isTop) {
       setTopNumbers(newNumbers);
-      localStorage.setItem('topNumbers', JSON.stringify(newNumbers));
     } else {
       setBottomNumbers(newNumbers);
     }
@@ -70,21 +88,15 @@ function App() {
   }, [topNumbers, bottomNumbers]);
 
   const handleSave = async () => {
-    if (!username) {
-      alert('Per favore, inserisci un nome utente');
-      return;
-    }
     const userRef = ref(db, `users/${username}`);
     await update(userRef, {
-      username,
       s: bottomNumbers[0],
       b: bottomNumbers[1],
-      d: bottomNumbers[2]
+      d: bottomNumbers[2],
+      sObj: topNumbers[0],
+      bObj: topNumbers[1],
+      dObj: topNumbers[2]
     });
-    localStorage.setItem('username', username);
-    if (!isUsernameLocked) {
-      setIsUsernameLocked(true);
-    }
     alert('Dati salvati con successo');
   };
 
@@ -112,19 +124,32 @@ function App() {
     }
   }, [currentPage]);
 
+  const renderLoginPage = () => (
+    <div className="login-page">
+      <h2>Login / Registrazione</h2>
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login / Registrati</button>
+      </form>
+    </div>
+  );
+
   const renderMePage = () => (
     <>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Il tuo nome"
-        className="username-input"
-        disabled={isUsernameLocked}
-      />
-      {!isUsernameLocked && (
-        <p>Attenzione: una volta salvato, il nome utente non potrà essere cambiato.</p>
-      )}
+      <h2>Benvenuto, {username}!</h2>
       <div className="section-title">OBIETTIVI:</div>
       <div className="section">
         <div className="column">
@@ -259,11 +284,16 @@ function App() {
 
   return (
     <div className="app">
-      {currentPage === 'Me' ? renderMePage() : renderLeaderboardPage()}
-      <div className="menu-bar">
-        <button onClick={() => setCurrentPage('Me')}>Me</button>
-        <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-      </div>
+      {currentPage === 'Login' && renderLoginPage()}
+      {currentPage === 'Me' && renderMePage()}
+      {currentPage === 'Leaderboard' && renderLeaderboardPage()}
+      {currentPage !== 'Login' && (
+        <div className="menu-bar">
+          <button onClick={() => setCurrentPage('Me')}>Me</button>
+          <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
+          <button onClick={() => setCurrentPage('Login')}>Logout</button>
+        </div>
+      )}
     </div>
   );
 }
