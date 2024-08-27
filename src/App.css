@@ -220,44 +220,41 @@ body {
 }
 
 .password-input-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  position: relative;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .password-input-container input {
-  flex-grow: 1;
+  width: 100%;
   padding: 10px;
+  padding-right: 40px; /* Spazio per l'icona */
   font-size: 16px;
   background-color: #333;
   color: #fff;
   border: 1px solid #ff4136;
   border-radius: 5px;
   box-sizing: border-box;
-  height: 40px; /* Altezza fissa per allineare con il pulsante */
 }
 
 .toggle-password {
-  width: 40px;
-  height: 40px;
-  background-color: #ff4136;
-  color: white;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  color: #ff4136;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s;
-  margin-left: 10px; /* Spazio tra l'input e il pulsante */
 }
 
-.toggle-password:hover {
-  background-color: #e60000;
+.toggle-password:focus {
+  outline: none;
 }
-
 .save-button {
   display: block;
   width: 60%; /* Cambiato da 100% a auto */
