@@ -221,9 +221,9 @@ body {
 
 .save-button {
   display: block;
-  width: 60%; /* Cambiato da 100% a auto */
-  padding: 10px 20px; /* Aggiunto padding orizzontale */
-  margin: 20px auto 0; /* Centrato orizzontalmente */
+  width: 60%;
+  padding: 10px 20px;
+  margin: 20px auto 0;
   background-color: #ff4136;
   color: #fff;
   border: none;
@@ -234,4 +234,50 @@ body {
 
 .save-button:hover {
   background-color: #e60000;
+}
+
+/* Stili specifici per PasswordInput */
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #ff4136;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.password-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin-top: 0;
+  transition: none;
+}
+
+.toggle-password:hover, .toggle-password:focus {
+  background-color: transparent;
+  outline: none;
 }
