@@ -220,7 +220,6 @@ body {
 }
 
 .password-input-container {
-  position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -228,7 +227,7 @@ body {
 }
 
 .password-input-container input {
-  width: calc(100% - 30px); /* Ridotto per fare spazio al bottone più piccolo */
+  flex-grow: 1;
   padding: 10px;
   font-size: 16px;
   background-color: #333;
@@ -236,25 +235,23 @@ body {
   border: 1px solid #ff4136;
   border-radius: 5px;
   box-sizing: border-box;
+  height: 40px; /* Altezza fissa per allineare con il pulsante */
 }
 
 .toggle-password {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   background-color: #ff4136;
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s;
+  margin-left: 10px; /* Spazio tra l'input e il pulsante */
 }
 
 .toggle-password:hover {
@@ -263,7 +260,7 @@ body {
 
 .save-button {
   display: block;
-  width: auto; /* Cambiato da 100% a auto */
+  width: 60%; /* Cambiato da 100% a auto */
   padding: 10px 20px; /* Aggiunto padding orizzontale */
   margin: 20px auto 0; /* Centrato orizzontalmente */
   background-color: #ff4136;
