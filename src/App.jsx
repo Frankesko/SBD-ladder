@@ -1,35 +1,55 @@
 import React, { useState, useEffect } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebase/database';
 import './App.css';
 
+// Configurazione Firebase
+const firebaseConfig = {
+  databaseURL: "https://sbd-ladder-default-rtdb.europe-west1.firebasedatabase.app/",
+  // Aggiungi qui gli altri dettagli di configurazione
+};
+
+// Inizializza Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
 function App() {
-  const [topNumbers, setTopNumbers] = useState(() => {
-    const savedTopNumbers = localStorage.getItem('topNumbers');
-    return savedTopNumbers ? JSON.parse(savedTopNumbers) : [0, 0, 0, 0];
-  });
+  const [currentPage, setCurrentPage] = useState('Me');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [topNumbers, setTopNumbers] = useState([0, 0, 0, 0]);
+  const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
+  const [percentages, setPercentages] = useState([0, 0, 0, 0]);
+  const [leaderboard, setLeaderboard] = useState([]);
 
-  const [bottomNumbers, setBottomNumbers] = useState(() => {
-    const savedBottomNumbers = localStorage.getItem('bottomNumbers');
-    return savedBottomNumbers ? JSON.parse(savedBottomNumbers) : [0, 0, 0, 0];
-  });
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) {
+      setUsername(savedUsername);
+      setIsLoggedIn(true);
+      loadUserData(savedUsername);
+    }
+  }, []);
 
-  const [percentages, setPercentages] = useState(() => {
-    const savedPercentages = localStorage.getItem('percentages');
-    return savedPercentages ? JSON.parse(savedPercentages) : [0, 0, 0, 0];
-  });
+  const loadUserData = async (username) => {
+    const userRef = ref(db, `users/${username}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      setTopNumbers([userData.s, userData.b, userData.d, userData.s + userData.b + userData.d]);
+      setBottomNumbers([userData.s, userData.b, userData.d, userData.s + userData.b + userData.d]);
+    }
+  };
 
   const handleNumberChange = (index, isTop, newValue) => {
+    const newNumbers = isTop ? [...topNumbers] : [...bottomNumbers];
+    newNumbers[index] = Number(newValue);
+    newNumbers[3] = newNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
     if (isTop) {
-      const newTopNumbers = [...topNumbers];
-      newTopNumbers[index] = Number(newValue);
-      newTopNumbers[3] = newTopNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
-      setTopNumbers(newTopNumbers);
-      localStorage.setItem('topNumbers', JSON.stringify(newTopNumbers));
+      setTopNumbers(newNumbers);
     } else {
-      const newBottomNumbers = [...bottomNumbers];
-      newBottomNumbers[index] = Number(newValue);
-      newBottomNumbers[3] = newBottomNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
-      setBottomNumbers(newBottomNumbers);
-      localStorage.setItem('bottomNumbers', JSON.stringify(newBottomNumbers));
+      setBottomNumbers(newNumbers);
     }
   };
 
@@ -38,11 +58,98 @@ function App() {
       top !== 0 ? (bottomNumbers[index] / top) * 100 : 0
     );
     setPercentages(newPercentages);
-    localStorage.setItem('percentages', JSON.stringify(newPercentages));
   }, [topNumbers, bottomNumbers]);
 
-  return (
-    <div className="app">
+  const handleLogin = async () => {
+    const userRef = ref(db, `users/${username}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists() && snapshot.val().password === password) {
+      setIsLoggedIn(true);
+      localStorage.setItem('username', username);
+      loadUserData(username);
+    } else {
+      alert('Username o password non validi');
+    }
+  };
+
+  const handleRegister = async () => {
+    const userRef = ref(db, `users/${username}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      alert('Username già in uso');
+    } else {
+      await set(userRef, {
+        username,
+        password,
+        s: 0,
+        b: 0,
+        d: 0
+      });
+      setIsLoggedIn(true);
+      localStorage.setItem('username', username);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername('');
+    setPassword('');
+    localStorage.removeItem('username');
+  };
+
+  const handleSave = async () => {
+    const userRef = ref(db, `users/${username}`);
+    await update(userRef, {
+      s: bottomNumbers[0],
+      b: bottomNumbers[1],
+      d: bottomNumbers[2]
+    });
+    alert('Dati salvati con successo');
+  };
+
+  const loadLeaderboard = async () => {
+    const usersRef = ref(db, 'users');
+    const usersQuery = query(usersRef, orderByChild('s'));
+    const snapshot = await get(usersQuery);
+    const leaderboardData = [];
+    snapshot.forEach((childSnapshot) => {
+      const userData = childSnapshot.val();
+      leaderboardData.push({
+        username: userData.username,
+        total: userData.s + userData.b + userData.d
+      });
+    });
+    leaderboardData.sort((a, b) => b.total - a.total);
+    setLeaderboard(leaderboardData);
+  };
+
+  useEffect(() => {
+    if (currentPage === 'Leaderboard') {
+      loadLeaderboard();
+    }
+  }, [currentPage]);
+
+  const renderLoginPage = () => (
+    <div className="login-page">
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleRegister}>Registrati</button>
+    </div>
+  );
+
+  const renderMePage = () => (
+    <>
       <div className="section-title">OBIETTIVI:</div>
       <div className="section">
         <div className="column">
@@ -153,6 +260,37 @@ function App() {
           </div>
         </div>
       </div>
+      <button onClick={handleSave}>Salva</button>
+    </>
+  );
+
+  const renderLeaderboardPage = () => (
+    <div className="leaderboard">
+      <h2>Classifica</h2>
+      <ul>
+        {leaderboard.map((user, index) => (
+          <li key={user.username}>
+            {index + 1}. {user.username} - Total: {user.total}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  return (
+    <div className="app">
+      {isLoggedIn ? (
+        <>
+          {currentPage === 'Me' ? renderMePage() : renderLeaderboardPage()}
+          <div className="menu-bar">
+            <button onClick={() => setCurrentPage('Me')}>Me</button>
+            <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        </>
+      ) : (
+        renderLoginPage()
+      )}
     </div>
   );
 }
