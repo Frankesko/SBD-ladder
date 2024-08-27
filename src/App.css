@@ -243,7 +243,7 @@ body {
   margin-bottom: 10px;
 }
 
-.password-input {
+.password-input-container input.password-input {
   width: 100%;
   padding: 10px;
   padding-right: 40px;
@@ -253,13 +253,14 @@ body {
   border: 1px solid #ff4136;
   border-radius: 5px;
   box-sizing: border-box;
+  margin-bottom: 0; /* Sovrascrivi il margin-bottom degli input generici */
 }
 
-.password-input::placeholder {
+.password-input-container input.password-input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.toggle-password {
+.password-input-container button.toggle-password {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -277,7 +278,23 @@ body {
   transition: none;
 }
 
-.toggle-password:hover, .toggle-password:focus {
+.password-input-container button.toggle-password:hover,
+.password-input-container button.toggle-password:focus {
   background-color: transparent;
   outline: none;
+}
+
+/* Sovrascrivi gli stili generici dei bottoni per il toggle-password */
+.login-page .password-input-container button.toggle-password,
+.profile-page .password-input-container button.toggle-password {
+  width: auto;
+  padding: 0;
+  background-color: transparent;
+  color: #fff;
+  margin-top: 0;
+}
+
+.login-page .password-input-container button.toggle-password:hover,
+.profile-page .password-input-container button.toggle-password:hover {
+  background-color: transparent;
 }
