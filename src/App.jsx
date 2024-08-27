@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebase/database';
 import './App.css';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // Configurazione Firebase
 const firebaseConfig = {
