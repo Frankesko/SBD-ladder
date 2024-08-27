@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const PasswordInput = ({ value, onChange, placeholder }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,50 +19,46 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
         onClick={() => setShowPassword(!showPassword)}
         aria-label={showPassword ? "Nascondi password" : "Mostra password"}
       >
-        {showPassword ? "👁️" : "👁️‍🗨️"}
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
       </button>
-
       <style jsx>{`
         .password-input-container {
           position: relative;
           width: 100%;
           margin-bottom: 10px;
         }
-        
         .password-input {
           width: 100%;
-          padding: 10px;
+          padding: 12px;
           padding-right: 40px;
           font-size: 16px;
-          background-color: #333;
-          color: #fff;
-          border: 1px solid #ff4136;
-          border-radius: 5px;
-          box-sizing: border-box;
+          background-color: white;
+          color: #333;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          transition: border-color 0.3s ease;
         }
-        
+        .password-input:focus {
+          outline: none;
+          border-color: #007bff;
+        }
+        .password-input::placeholder {
+          color: #999;
+        }
         .toggle-password {
           position: absolute;
-          right: 5px;
+          right: 10px;
           top: 50%;
           transform: translateY(-50%);
           background: none;
           border: none;
           cursor: pointer;
-          color: #fff;
-          font-size: 20px;
+          color: #777;
           padding: 5px;
-          width: 30px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
-        
-        .toggle-password:hover,
         .toggle-password:focus {
-          color: #ff4136;
           outline: none;
+          color: #007bff;
         }
       `}</style>
     </div>
