@@ -263,25 +263,6 @@ body {
   align-items: center
 }
 
-.password-input-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.password-input-container input {
-  flex-grow: 1;
-  margin-right: 5px;
-}
-
-.toggle-password {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 0;
-}
-
 .login-button,
 .change-password-button,
 .save-button {
@@ -304,4 +285,32 @@ body {
 .save-button {
   margin-top: 20px;
   max-width: 200px;
+}
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 30px; /* Spazio per il pulsante */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

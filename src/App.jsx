@@ -206,36 +206,101 @@ function App() {
   };
 
   const renderLoginPage = () => (
-    <div className="login-page">
-      <h2>Login / Registrazione</h2>
-      <form onSubmit={handleLogin}>
+  <div className="login-page">
+    <h2>Login / Registrazione</h2>
+    <form onSubmit={handleLogin}>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+        required
+      />
+      <div className="password-input-container">  
         <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
           required
         />
-        <div className="password-input-container">
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "👁️" : "👁️‍🗨️"}
-          </button>
-        </div>
-        <button type="submit" className="login-button">Login / Registrati</button>
-      </form>
+        <button
+          type="button"
+          className="toggle-password"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "👁️" : "🔒"}
+        </button>
+      </div>
+      <button type="submit" className="login-button">Login / Registrati</button>
+    </form>
+  </div>
+);
+
+const renderProfilePage = () => (
+  <div className="profile-page">
+    <h2>Profilo di {username}</h2>
+    <div className="profile-section">
+      <h3>Cambia Username</h3>
+      <input
+        type="text"
+        value={newUsername}
+        onChange={(e) => setNewUsername(e.target.value)}
+        placeholder="Nuovo Username"
+      />
+      <button onClick={handleChangeUsername}>Cambia Username</button>
     </div>
-  );
+    <div className="profile-section">
+      <h3>Cambia Password</h3>
+      <div className="password-input-container">
+        <input
+          type={showPassword ? "text" : "password"}
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          placeholder="Password corrente"
+        />
+        <button
+          type="button"
+          className="toggle-password"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "👁️" : "🔒"}
+        </button>
+      </div>
+      <div className="password-input-container">
+        <input
+          type={showNewPassword ? "text" : "password"}
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          placeholder="Nuova Password"
+        />
+        <button
+          type="button"
+          className="toggle-password"
+          onClick={() => setShowNewPassword(!showNewPassword)}
+        >
+          {showNewPassword ? "👁️" : "🔒"}
+        </button>
+      </div>
+      <div className="password-input-container">
+        <input
+          type={showConfirmNewPassword ? "text" : "password"}
+          value={confirmNewPassword}
+          onChange={(e) => setConfirmNewPassword(e.target.value)}
+          placeholder="Conferma nuova Password"
+        />
+        <button
+          type="button"
+          className="toggle-password"
+          onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+        >
+          {showConfirmNewPassword ? "👁️" : "🔒"}
+        </button>
+      </div>
+      <button onClick={handleChangePassword} className="change-password-button">Cambia Password</button>
+    </div>
+  </div>
+);
 
   const renderMePage = () => (
     <>
@@ -379,71 +444,6 @@ function App() {
           </li>
         ))}
       </ul>
-    </div>
-  );
-
-  const renderProfilePage = () => (
-    <div className="profile-page">
-      <h2>Profilo di {username}</h2>
-      <div className="profile-section">
-        <h3>Cambia Username</h3>
-        <input
-          type="text"
-          value={newUsername}
-          onChange={(e) => setNewUsername(e.target.value)}
-          placeholder="Nuovo Username"
-        />
-        <button onClick={handleChangeUsername}>Cambia Username</button>
-      </div>
-      <div className="profile-section">
-        <h3>Cambia Password</h3>
-        <div className="password-input-container">
-          <input
-            type={showPassword ? "text" : "password"}
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder="Password corrente"
-          />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "👁️" : "👁️‍🗨️"}
-          </button>
-        </div>
-        <div className="password-input-container">
-          <input
-            type={showNewPassword ? "text" : "password"}
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Nuova Password"
-          />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowNewPassword(!showNewPassword)}
-          >
-            {showNewPassword ? "👁️" : "👁️‍🗨️"}
-          </button>
-        </div>
-        <div className="password-input-container">
-          <input
-            type={showConfirmNewPassword ? "text" : "password"}
-            value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
-            placeholder="Conferma nuova Password"
-          />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-          >
-            {showConfirmNewPassword ? "👁️" : "👁️‍🗨️"}
-          </button>
-        </div>
-        <button onClick={handleChangePassword} className="change-password-button">Cambia Password</button>
-      </div>
     </div>
   );
 
