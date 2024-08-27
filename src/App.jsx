@@ -216,13 +216,12 @@ function App() {
         placeholder="Username"
         required
       />
-      <div className="password-input-container">  
+      <div className="password-input-container">
         <input
           type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          required
         />
         <button
           type="button"
