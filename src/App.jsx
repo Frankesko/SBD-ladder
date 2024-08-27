@@ -43,8 +43,10 @@ function App() {
     if (snapshot.exists()) {
       const userData = snapshot.val();
       setBottomNumbers([userData.s || 0, userData.b || 0, userData.d || 0, (userData.s || 0) + (userData.b || 0) + (userData.d || 0)]);
-      // Aggiorna anche topNumbers se necessario
-      // setTopNumbers([...]);
+      
+      // Carica i dati degli obiettivi dal localStorage
+      const savedTopNumbers = JSON.parse(localStorage.getItem('topNumbers')) || [0, 0, 0, 0];
+      setTopNumbers(savedTopNumbers);
     }
   };
 
@@ -54,6 +56,7 @@ function App() {
     newNumbers[3] = newNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
     if (isTop) {
       setTopNumbers(newNumbers);
+      localStorage.setItem('topNumbers', JSON.stringify(newNumbers));
     } else {
       setBottomNumbers(newNumbers);
     }
@@ -242,7 +245,12 @@ function App() {
       <ul>
         {leaderboard.map((user, index) => (
           <li key={user.username}>
-            {index + 1}. {user.username} - S: {user.s}, B: {user.b}, D: {user.d}, Total: {user.total}
+            <span className="rank">{index + 1}.</span>
+            <span className="username">{user.username}</span>
+            <span className="score">S: {user.s}</span>
+            <span className="score">B: {user.b}</span>
+            <span className="score">D: {user.d}</span>
+            <span className="total">Total: {user.total}</span>
           </li>
         ))}
       </ul>
