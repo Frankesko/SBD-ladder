@@ -219,59 +219,57 @@ body {
   width: 100%;
 }
 
-:root {
-  --input-bg: #333;
-  --input-text: #fff;
-  --input-border: #ff4136;
-  --icon-color: #fff;
-  --icon-hover: #ff4136;
-}
+  .password-input-container {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+  }
 
-.password-input-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
+  .password-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ff4136;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
 
-.password-input {
-  width: 80%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: var(--input-bg);
-  color: var(--input-text);
-  border: 1px solid var(--input-border);
-  border-radius: 5px;
-  box-sizing: border-box;
-}
+  .toggle-password {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: color 0.3s ease;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+  }
 
-.toggle-password {
-  margin-left: 10px; /* Spazio tra l'input e l'icona */
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--icon-color);
-  transition: color 0.3s ease;
-  padding: 0;
-}
+  .toggle-password:hover,
+  .toggle-password:focus {
+    color: #ff4136;
+    outline: none;
+  }
 
-.toggle-password:hover,
-.toggle-password:focus {
-  color: var(--icon-hover);
-  outline: none;
-}
+  .toggle-password:focus-visible {
+    outline: 2px solid #ff4136;
+    border-radius: 5px;
+  }
 
-.toggle-password:focus-visible {
-  outline: 2px solid var(--icon-hover);
-  border-radius: 5px;
-}
-
-.password-input-container input::placeholder {
-  color: #bbb;
-}
+  .password-input::placeholder {
+    color: #bbb;
+  }
 
 .save-button {
   display: block;
