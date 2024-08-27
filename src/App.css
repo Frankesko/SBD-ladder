@@ -228,15 +228,15 @@ body {
 }
 
 .password-input-container {
-  position: relative;
-  width: 80%;
+  display: flex;
+  align-items: center;
+  width: 100%;
   margin-bottom: 10px;
 }
 
 .password-input {
-  width: 100%;
+  flex-grow: 1;
   padding: 10px;
-  padding-right: 40px; /* Adjust space for the icon */
   font-size: 16px;
   background-color: var(--input-bg);
   color: var(--input-text);
@@ -246,19 +246,16 @@ body {
 }
 
 .toggle-password {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-left: 10px; /* Spazio tra l'input e l'icona */
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--icon-color);
   transition: color 0.3s ease;
+  padding: 0;
 }
 
 .toggle-password:hover,
