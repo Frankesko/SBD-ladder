@@ -256,3 +256,8 @@ body {
 .profile-page button:hover {
   background-color: #e60000;
 }
+
+.bw-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center
