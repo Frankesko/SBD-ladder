@@ -4,6 +4,10 @@ import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebas
 import './App.css';
 import bcrypt from 'bcryptjs';
 import PasswordInput from './PasswordInput';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { User, Trophy, Settings } from 'lucide-react';
+
 
 // Configurazione Firebase
 const firebaseConfig = {
@@ -412,9 +416,15 @@ return (
     {currentPage === 'Profile' && renderProfilePage()}
     {currentPage !== 'Login' && (
       <div className="menu-bar">
-        <button onClick={() => setCurrentPage('Me')}>Me</button>
-        <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-        <button onClick={() => setCurrentPage('Profile')}>Profilo</button>
+        <button onClick={() => setCurrentPage('Me')}>
+          <User size={24} />
+        </button>
+        <button onClick={() => setCurrentPage('Leaderboard')}>
+          <Trophy size={24} />
+        </button>
+        <button onClick={() => setCurrentPage('Profile')}>
+          <Settings size={24} />
+        </button>
       </div>
     )}
   </div>
