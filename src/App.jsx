@@ -33,6 +33,9 @@ function App() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [bw, setBw] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   useEffect(() => {
     // Controlla se ci sono credenziali salvate nel localStorage
@@ -213,14 +216,23 @@ function App() {
           placeholder="Username"
           required
         />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login / Registrati</button>
+        <div className="password-input-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
+        <button type="submit" className="login-button">Login / Registrati</button>
       </form>
     </div>
   );
@@ -385,25 +397,52 @@ function App() {
       </div>
       <div className="profile-section">
         <h3>Cambia Password</h3>
-        <input
-          type="password"
-          value={currentPassword}
-          onChange={(e) => setCurrentPassword(e.target.value)}
-          placeholder="Password corrente"
-        />
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="Nuova Password"
-        />
-        <input
-          type="password"
-          value={confirmNewPassword}
-          onChange={(e) => setConfirmNewPassword(e.target.value)}
-          placeholder="Conferma nuova Password"
-        />
-        <button onClick={handleChangePassword}>Cambia Password</button>
+        <div className="password-input-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            placeholder="Password corrente"
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
+        <div className="password-input-container">
+          <input
+            type={showNewPassword ? "text" : "password"}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="Nuova Password"
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowNewPassword(!showNewPassword)}
+          >
+            {showNewPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
+        <div className="password-input-container">
+          <input
+            type={showConfirmNewPassword ? "text" : "password"}
+            value={confirmNewPassword}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            placeholder="Conferma nuova Password"
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+          >
+            {showConfirmNewPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
+        <button onClick={handleChangePassword} className="change-password-button">Cambia Password</button>
       </div>
     </div>
   );
