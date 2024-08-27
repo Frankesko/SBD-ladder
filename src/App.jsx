@@ -207,61 +207,61 @@ function App() {
   };
 
   const renderLoginPage = () => (
-  <div className="login-page">
-    <h2>Login / Registrazione</h2>
-    <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-        required
-      />
-     <PasswordInput
-        value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.target.value)}
-        placeholder="Password corrente"
-      />
-      <button type="submit" className="login-button">Login / Registrati</button>
-    </form>
-  </div>
-);
-
-const renderProfilePage = () => (
-  <div className="profile-page">
-    <h2>Profilo di {username}</h2>
-    <div className="profile-section">
-      <h3>Cambia Username</h3>
-      <input
-        type="text"
-        value={newUsername}
-        onChange={(e) => setNewUsername(e.target.value)}
-        placeholder="Nuovo Username"
-      />
-      <button onClick={handleChangeUsername}>Cambia Username</button>
+    <div className="login-page">
+      <h2>Login / Registrazione</h2>
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+          required
+        />
+        <PasswordInput
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button type="submit" className="login-button">Login / Registrati</button>
+      </form>
     </div>
-    <div className="profile-section">
-      <h3>Cambia Password</h3>
-      <PasswordInput
-        value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.target.value)}
-        placeholder="Password corrente"
-      />
-      <PasswordInput
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        placeholder="Nuova password"
-      />
-      <PasswordInput
-        value={confirmNewPassword}
-        onChange={(e) => setConfirmNewPassword(e.target.value)}
-        placeholder="Conferma nuova password"
-      />
-      <button onClick={handleChangePassword} className="change-password-button">Cambia Password</button>
-    </div>
-  </div>
-);
+  );
 
+  const renderProfilePage = () => (
+    <div className="profile-page">
+      <h2>Profilo di {username}</h2>
+      <div className="profile-section">
+        <h3>Cambia Username</h3>
+        <input
+          type="text"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+          placeholder="Nuovo Username"
+        />
+        <button onClick={handleChangeUsername}>Cambia Username</button>
+      </div>
+      <div className="profile-section">
+        <h3>Cambia Password</h3>
+        <PasswordInput
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          placeholder="Password corrente"
+        />
+        <PasswordInput
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          placeholder="Nuova password"
+        />
+        <PasswordInput
+          value={confirmNewPassword}
+          onChange={(e) => setConfirmNewPassword(e.target.value)}
+          placeholder="Conferma nuova password"
+        />
+        <button onClick={handleChangePassword} className="change-password-button">Cambia Password</button>
+      </div>
+    </div>
+  );
+  
   const renderMePage = () => (
     <>
       <h2>Benvenuto, {username}!</h2>

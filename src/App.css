@@ -228,7 +228,7 @@ body {
 .password-input-container input {
   width: 100%;
   padding: 10px;
-  padding-right: 40px; /* Spazio per l'icona */
+  padding-right: 40px;
   font-size: 16px;
   background-color: #333;
   color: #fff;
@@ -245,16 +245,21 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
-  color: #ff4136;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.toggle-password svg {
+  width: 24px;
+  height: 24px;
+}
+
 .toggle-password:focus {
   outline: none;
 }
+
 .save-button {
   display: block;
   width: 60%; /* Cambiato da 100% a auto */
