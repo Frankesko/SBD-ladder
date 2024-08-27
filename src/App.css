@@ -22,23 +22,27 @@ body {
   margin: 10px 0;
   color: #ff4136;
 }
+
 .section {
   display: flex;
   justify-content: space-around;
   width: 100%;
   margin-bottom: 20px;
 }
+
 .column {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .label {
   text-align: center;
   font-weight: bold;
   color: #ff4136;
   margin-bottom: 5px;
 }
+
 .number-input {
   padding: 10px;
   width: 80px;
@@ -49,6 +53,7 @@ body {
   border-radius: 5px;
   text-align: center;
 }
+
 .percentage-item {
   width: 100%;
   margin: 10px 0;
@@ -58,10 +63,12 @@ body {
   position: relative;
   height: 20px;
 }
+
 .percentage-bar {
   height: 100%;
   transition: width 0.3s ease-in-out;
 }
+
 .percentage-text {
   position: absolute;
   top: 50%;
@@ -166,70 +173,27 @@ body {
   color: #ff4136;
 }
 
-.login-page {
+.login-page, .profile-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-}
-
-.login-page form {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-}
-
-.login-page input {
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.login-page button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #ff4136;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.login-page button:hover {
-  background-color: #e60000;
-}
-
-
-.profile-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  min-height: 100vh;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-.profile-page h2 {
-  color: #ff4136;
-  margin-bottom: 20px;
-  text-align: center;
+.login-page form, .profile-section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-}
-
-.profile-section {
   margin-bottom: 20px;
-  width: 80%; /* Ridotto da 100% per creare spazio ai lati */
 }
 
-.profile-page h3 {
-  color: #ff4136;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.profile-page input {
+.login-page input, .profile-page input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -241,50 +205,35 @@ body {
   box-sizing: border-box;
 }
 
-.profile-page button {
+.login-page button, .profile-page button, .login-button, .change-password-button, .save-button {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   background-color: #ff4136;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
-.profile-page button:hover {
+.login-page button:hover, .profile-page button:hover, .login-button:hover, .change-password-button:hover, .save-button:hover {
   background-color: #e60000;
+}
+
+.profile-page h2, .profile-page h3 {
+  color: #ff4136;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .bw-input {
   display: flex;
   flex-direction: column;
-  align-items: center
-}
-
-.login-button,
-.change-password-button,
-.save-button {
+  align-items: center;
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.login-button:hover,
-.change-password-button:hover,
-.save-button:hover {
-  background-color: #0056b3;
-}
-
-.save-button {
-  margin-top: 20px;
-  max-width: 200px;
 }
 
 .password-input-container {
@@ -298,7 +247,7 @@ body {
 .password-input-container input {
   width: 100%;
   padding: 10px;
-  padding-right: 40px; /* Aumentato lo spazio per il pulsante */
+  padding-right: 40px;
   font-size: 16px;
   background-color: #333;
   color: #fff;
@@ -328,4 +277,20 @@ body {
 
 .toggle-password:hover {
   background-color: #e60000;
+}
+
+/* Aggiunta per migliorare la visualizzazione su schermi più piccoli */
+@media (max-width: 600px) {
+  .login-page, .profile-page {
+    padding: 10px;
+  }
+
+  .leaderboard li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .leaderboard li span {
+    margin-bottom: 5px;
+  }
 }
