@@ -90,23 +90,6 @@ body {
   border-radius: 5px;
 }
 
-.save-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #ff4136;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.save-button:hover {
-  background-color: #e60000;
-}
-
 .menu-bar {
   position: fixed;
   bottom: 0;
@@ -245,25 +228,29 @@ body {
 }
 
 .password-input-container input {
-  width: calc(100% - 40px); /* Riduce la larghezza dell'input per fare spazio al bottone */
+  width: calc(100% - 30px); /* Ridotto per fare spazio al bottone più piccolo */
   padding: 10px;
   font-size: 16px;
   background-color: #333;
   color: #fff;
   border: 1px solid #ff4136;
-  border-radius: 5px 0 0 5px; /* Arrotonda solo gli angoli sinistri */
+  border-radius: 5px;
   box-sizing: border-box;
 }
 
 .toggle-password {
-  width: 40px;
-  height: 40px; /* Altezza uguale all'input */
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
   background-color: #ff4136;
   color: white;
   border: none;
-  border-radius: 0 5px 5px 0; /* Arrotonda solo gli angoli destri */
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,5 +258,22 @@ body {
 }
 
 .toggle-password:hover {
+  background-color: #e60000;
+}
+
+.save-button {
+  display: block;
+  width: auto; /* Cambiato da 100% a auto */
+  padding: 10px 20px; /* Aggiunto padding orizzontale */
+  margin: 20px auto 0; /* Centrato orizzontalmente */
+  background-color: #ff4136;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.save-button:hover {
   background-color: #e60000;
 }
