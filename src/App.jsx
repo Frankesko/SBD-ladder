@@ -5,8 +5,14 @@ import './App.css';
 
 // Configurazione Firebase
 const firebaseConfig = {
-  databaseURL: "https://sbd-ladder-default-rtdb.europe-west1.firebasedatabase.app/",
-  // Aggiungi qui gli altri dettagli di configurazione
+  apiKey: "AIzaSyAd7n_WQD_jUUPSTftZ6jtu8xidMun-jzc",
+  authDomain: "sbd-ladder.firebaseapp.com",
+  databaseURL: "https://sbd-ladder-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "sbd-ladder",
+  storageBucket: "sbd-ladder.appspot.com",
+  messagingSenderId: "111032615204",
+  appId: "1:111032615204:web:c444cf45e5bd5733adb3b1",
+  measurementId: "G-GCFF96NMEW"
 };
 
 // Inizializza Firebase
