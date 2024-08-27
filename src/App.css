@@ -166,8 +166,6 @@ body {
   color: #ff4136;
 }
 
-
-
 .login-page {
   display: flex;
   flex-direction: column;
@@ -210,21 +208,25 @@ body {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .profile-page h2 {
   color: #ff4136;
   margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .profile-section {
   margin-bottom: 20px;
-  width: 100%;
+  width: 80%; /* Ridotto da 100% per creare spazio ai lati */
 }
 
 .profile-page h3 {
   color: #ff4136;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .profile-page input {
