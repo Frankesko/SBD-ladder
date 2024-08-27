@@ -29,21 +29,16 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
         }
         .password-input {
           width: 100%;
-          padding: 12px;
+          padding: 10px;
           padding-right: 40px;
           font-size: 16px;
-          background-color: white;
-          color: #333;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          transition: border-color 0.3s ease;
-        }
-        .password-input:focus {
-          outline: none;
-          border-color: #007bff;
+          background-color: #ff4136;
+          color: white;
+          border: none;
+          border-radius: 5px;
         }
         .password-input::placeholder {
-          color: #999;
+          color: rgba(255, 255, 255, 0.7);
         }
         .toggle-password {
           position: absolute;
@@ -53,12 +48,14 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
           background: none;
           border: none;
           cursor: pointer;
-          color: #777;
-          padding: 5px;
+          color: white;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .toggle-password:focus {
           outline: none;
-          color: #007bff;
         }
       `}</style>
     </div>
