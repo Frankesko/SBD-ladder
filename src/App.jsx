@@ -28,7 +28,9 @@ function App() {
   const [percentages, setPercentages] = useState([0, 0, 0, 0]);
   const [leaderboard, setLeaderboard] = useState([]);
   const [newUsername, setNewUsername] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -144,10 +146,28 @@ function App() {
   };
 
   const handleChangePassword = async () => {
-    if (newPassword) {
+    if (currentPassword && newPassword && confirmNewPassword) {
+      if (newPassword !== confirmNewPassword) {
+        alert('Le nuove password non corrispondono');
+        return;
+      }
+      
       const userRef = ref(db, `users/${username.toLowerCase()}`);
-      await update(userRef, {password: newPassword});
-      alert('Password cambiata con successo');
+      const snapshot = await get(userRef);
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        if (userData.password === currentPassword) {
+          await update(userRef, {password: newPassword});
+          alert('Password cambiata con successo');
+          setCurrentPassword('');
+          setNewPassword('');
+          setConfirmNewPassword('');
+        } else {
+          alert('La password corrente non è corretta');
+        }
+      }
+    } else {
+      alert('Per favore, compila tutti i campi');
     }
   };
 
@@ -312,7 +332,7 @@ function App() {
   const renderProfilePage = () => (
     <div className="profile-page">
       <h2>Profilo di {username}</h2>
-      <div>
+      <div className="profile-section">
         <h3>Cambia Username</h3>
         <input
           type="text"
@@ -322,13 +342,25 @@ function App() {
         />
         <button onClick={handleChangeUsername}>Cambia Username</button>
       </div>
-      <div>
+      <div className="profile-section">
         <h3>Cambia Password</h3>
+        <input
+          type="password"
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          placeholder="Password corrente"
+        />
         <input
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           placeholder="Nuova Password"
+        />
+        <input
+          type="password"
+          value={confirmNewPassword}
+          onChange={(e) => setConfirmNewPassword(e.target.value)}
+          placeholder="Conferma nuova Password"
         />
         <button onClick={handleChangePassword}>Cambia Password</button>
       </div>
