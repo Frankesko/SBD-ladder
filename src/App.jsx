@@ -33,24 +33,40 @@ function App() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [bw, setBw] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const lowercaseUsername = username.toLowerCase();
+  useEffect(() => {
+    // Controlla se ci sono credenziali salvate nel localStorage
+    const savedUsername = localStorage.getItem('username');
+    const savedPassword = localStorage.getItem('password');
+    if (savedUsername && savedPassword) {
+      setUsername(savedUsername);
+      setPassword(savedPassword);
+      handleLogin(null, savedUsername, savedPassword);
+    }
+  }, []);
+
+  const handleLogin = async (e, savedUsername = null, savedPassword = null) => {
+    if (e) e.preventDefault();
+    const loginUsername = savedUsername || username;
+    const loginPassword = savedPassword || password;
+    const lowercaseUsername = loginUsername.toLowerCase().replace(/\s/g, '');
     const userRef = ref(db, `users/${lowercaseUsername}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      if (userData.password === password) {
+      if (userData.password === loginPassword) {
         setUsername(userData.username);  // Use the stored username with correct casing
         loadUserData(lowercaseUsername);
         setCurrentPage('Me');
+        // Salva le credenziali nel localStorage
+        localStorage.setItem('username', userData.username);
+        localStorage.setItem('password', loginPassword);
       } else {
         alert('Password errata');
       }
     } else {
       await set(userRef, {
-        username: username,  // Store the original username
-        password,
+        username: loginUsername,  // Store the original username
+        password: loginPassword,
         s: 0,
         b: 0,
         d: 0,
@@ -61,6 +77,9 @@ function App() {
       });
       loadUserData(lowercaseUsername);
       setCurrentPage('Me');
+      // Salva le credenziali nel localStorage
+      localStorage.setItem('username', loginUsername);
+      localStorage.setItem('password', loginPassword);
     }
   };
 
@@ -94,7 +113,7 @@ function App() {
   }, [topNumbers, bottomNumbers]);
 
   const handleSave = async () => {
-    const userRef = ref(db, `users/${username.toLowerCase()}`);
+    const userRef = ref(db, `users/${username.toLowerCase().replace(/\s/g, '')}`);
     await update(userRef, {
       s: bottomNumbers[0],
       b: bottomNumbers[1],
@@ -134,17 +153,18 @@ function App() {
 
   const handleChangeUsername = async () => {
     if (newUsername) {
-      const lowercaseNewUsername = newUsername.toLowerCase();
+      const lowercaseNewUsername = newUsername.toLowerCase().replace(/\s/g, '');
       const newUserRef = ref(db, `users/${lowercaseNewUsername}`);
       const snapshot = await get(newUserRef);
       if (snapshot.exists()) {
         alert('Username già in uso');
       } else {
-        const oldUserRef = ref(db, `users/${username.toLowerCase()}`);
+        const oldUserRef = ref(db, `users/${username.toLowerCase().replace(/\s/g, '')}`);
         const userData = (await get(oldUserRef)).val();
         await set(newUserRef, {...userData, username: newUsername});
         await set(oldUserRef, null);
         setUsername(newUsername);
+        localStorage.setItem('username', newUsername);
         alert('Username cambiato con successo');
       }
     }
@@ -157,12 +177,13 @@ function App() {
         return;
       }
       
-      const userRef = ref(db, `users/${username.toLowerCase()}`);
+      const userRef = ref(db, `users/${username.toLowerCase().replace(/\s/g, '')}`);
       const snapshot = await get(userRef);
       if (snapshot.exists()) {
         const userData = snapshot.val();
         if (userData.password === currentPassword) {
           await update(userRef, {password: newPassword});
+          localStorage.setItem('password', newPassword);
           alert('Password cambiata con successo');
           setCurrentPassword('');
           setNewPassword('');
@@ -336,8 +357,8 @@ function App() {
             <span className="score">S: {user.s}</span>
             <span className="score">B: {user.b}</span>
             <span className="score">D: {user.d}</span>
-            <span className="bw">BW: {user.bw}</span>
-            <span className="total">Total: <strong>{user.total}</strong></span>
+            <span className="bw"><strong>BW: {user.bw}</strong></span>
+            <span className="total"><strong>Total: {user.total}</strong></span>
           </li>
         ))}
       </ul>
@@ -382,21 +403,21 @@ function App() {
     </div>
   );
 
-  return (
-    <div className="app">
-      {currentPage === 'Login' && renderLoginPage()}
-      {currentPage === 'Me' && renderMePage()}
-      {currentPage === 'Leaderboard' && renderLeaderboardPage()}
-      {currentPage === 'Profile' && renderProfilePage()}
-      {currentPage !== 'Login' && (
-        <div className="menu-bar">
-          <button onClick={() => setCurrentPage('Me')}>Me</button>
-          <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
-          <button onClick={() => setCurrentPage('Profile')}>Profilo</button>
-        </div>
-      )}
-    </div>
-  );
+return (
+  <div className="app">
+    {currentPage === 'Login' && renderLoginPage()}
+    {currentPage === 'Me' && renderMePage()}
+    {currentPage === 'Leaderboard' && renderLeaderboardPage()}
+    {currentPage === 'Profile' && renderProfilePage()}
+    {currentPage !== 'Login' && (
+      <div className="menu-bar">
+        <button onClick={() => setCurrentPage('Me')}>Me</button>
+        <button onClick={() => setCurrentPage('Leaderboard')}>Classifica</button>
+        <button onClick={() => setCurrentPage('Profile')}>Profilo</button>
+      </div>
+    )}
+  </div>
+);
 }
 
 function getColor(percentage) {
