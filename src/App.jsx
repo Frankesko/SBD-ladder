@@ -34,9 +34,6 @@ function App() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [bw, setBw] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   useEffect(() => {
     // Controlla se ci sono credenziali salvate nel localStorage
@@ -261,7 +258,7 @@ function App() {
       </div>
     </div>
   );
-  
+
   const renderMePage = () => (
     <>
       <h2>Benvenuto, {username}!</h2>
