@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, get, update, query, orderByChild } from 'firebase/database';
 import './App.css';
+import bcrypt from 'bcrypt';
 
 // Configurazione Firebase
 const firebaseConfig = {
@@ -53,20 +54,22 @@ function App() {
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      if (userData.password === loginPassword) {
-        setUsername(userData.username);  // Use the stored username with correct casing
+      const isPasswordCorrect = await bcrypt.compare(loginPassword, userData.password);
+      if (isPasswordCorrect) {
+        setUsername(userData.username);
         loadUserData(lowercaseUsername);
         setCurrentPage('Me');
-        // Salva le credenziali nel localStorage
         localStorage.setItem('username', userData.username);
         localStorage.setItem('password', loginPassword);
       } else {
         alert('Password errata');
       }
     } else {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(loginPassword, saltRounds);
       await set(userRef, {
-        username: loginUsername,  // Store the original username
-        password: loginPassword,
+        username: loginUsername,
+        password: hashedPassword,
         s: 0,
         b: 0,
         d: 0,
@@ -77,7 +80,6 @@ function App() {
       });
       loadUserData(lowercaseUsername);
       setCurrentPage('Me');
-      // Salva le credenziali nel localStorage
       localStorage.setItem('username', loginUsername);
       localStorage.setItem('password', loginPassword);
     }
@@ -181,8 +183,11 @@ function App() {
       const snapshot = await get(userRef);
       if (snapshot.exists()) {
         const userData = snapshot.val();
-        if (userData.password === currentPassword) {
-          await update(userRef, {password: newPassword});
+        const isPasswordCorrect = await bcrypt.compare(currentPassword, userData.password);
+        if (isPasswordCorrect) {
+          const saltRounds = 10;
+          const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+          await update(userRef, {password: hashedNewPassword});
           localStorage.setItem('password', newPassword);
           alert('Password cambiata con successo');
           setCurrentPassword('');
