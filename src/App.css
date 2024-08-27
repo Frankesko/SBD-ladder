@@ -219,20 +219,28 @@ body {
   width: 100%;
 }
 
+:root {
+  --input-bg: #333;
+  --input-text: #fff;
+  --input-border: #ff4136;
+  --icon-color: #fff;
+  --icon-hover: #ff4136;
+}
+
 .password-input-container {
   position: relative;
   width: 100%;
   margin-bottom: 10px;
 }
 
-.password-input-container input {
+.password-input {
   width: 100%;
   padding: 10px;
   padding-right: 40px;
   font-size: 16px;
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #ff4136;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
   border-radius: 5px;
   box-sizing: border-box;
 }
@@ -249,15 +257,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--icon-color);
+  transition: color 0.3s ease;
 }
 
-.toggle-password svg {
-  width: 24px;
-  height: 24px;
-}
-
+.toggle-password:hover,
 .toggle-password:focus {
+  color: var(--icon-hover);
   outline: none;
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid var(--icon-hover);
+  border-radius: 5px;
 }
 
 .save-button {
