@@ -34,12 +34,12 @@ const LeaderboardWithSorting = ({ data }) => {
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
-          <option value="sDesc">S (maggiore)</option>
-          <option value="bDesc">B (maggiore)</option>
-          <option value="dDesc">D (maggiore)</option>
-          <option value="bwDesc">BW (maggiore)</option>
-          <option value="totalDesc">Totale (maggiore)</option>
-          <option value="ratioDesc">Rapporto Totale/BW (maggiore)</option>
+          <option value="sDesc">S</option>
+          <option value="bDesc">B</option>
+          <option value="dDesc">D</option>
+          <option value="bwDesc">BW</option>
+          <option value="totalDesc">Totale</option>
+          <option value="ratioDesc">Totale/BW</option>
         </select>
       </div>
       <table className="leaderboard-table">
