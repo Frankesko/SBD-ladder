@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import './LeaderboardWithSorting.css';
 
+const LeaderboardWithSorting = ({ data }) => {
+  const [sortBy, setSortBy] = useState('totalDesc');
+
   const sortedAndGroupedData = useMemo(() => {
     const sorted = [...data].sort((a, b) => {
       switch (sortBy) {
@@ -17,11 +20,11 @@ import './LeaderboardWithSorting.css';
           if (categoryA === categoryB) {
             return b.total - a.total;
           }
-          return parseFloat(b.bw) - parseFloat(a.bw);
+          return categoryA - categoryB;
         case 'totalDesc':
           return b.total - a.total;
         case 'ratioDesc':
-          return (b.total / parseFloat(b.bw)) - (a.total / parseFloat(a.bw));
+          return b.total / parseFloat(b.bw) - a.total / parseFloat(a.bw);
         default:
           return b.total - a.total;
       }
@@ -65,12 +68,14 @@ import './LeaderboardWithSorting.css';
           {Object.entries(sortedAndGroupedData).map(([category, items]) => (
             <React.Fragment key={category}>
               {sortBy === 'bwDesc' && (
-                <h3 className="weight-category">Categoria {category}-{parseInt(category) + 9.9} kg</h3>
+                <h3 className="weight-category">
+                  Categoria {category}-{parseInt(category) + 9.9} kg
+                </h3>
               )}
               <table className="leaderboard-table">
                 <thead>
                   <tr>
-                    <th></th>
+                    <th>#</th>
                     <th>Nome</th>
                     <th>S</th>
                     <th>B</th>
@@ -90,7 +95,9 @@ import './LeaderboardWithSorting.css';
                       <td>{item.d}</td>
                       <td>{item.bw}</td>
                       <td className="total">{item.total}</td>
-                      {sortBy === 'ratioDesc' && <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>}
+                      {sortBy === 'ratioDesc' && (
+                        <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
