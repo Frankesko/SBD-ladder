@@ -45,7 +45,7 @@ const LeaderboardWithSorting = ({ data }) => {
       <table className="leaderboard-table">
         <thead>
           <tr>
-            <th>Pos</th>
+            <th></th>
             <th>Nome</th>
             <th>S</th>
             <th>B</th>
