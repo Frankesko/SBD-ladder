@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import './Leaderboard.css'; // Assicurati di creare questo file CSS
 
 const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
@@ -13,11 +14,11 @@ const LeaderboardWithSorting = ({ data }) => {
         case 'dDesc':
           return b.d - a.d;
         case 'bwDesc':
-          return b.bw - a.bw;
+          return parseFloat(b.bw) - parseFloat(a.bw);
         case 'totalDesc':
           return b.total - a.total;
         case 'ratioDesc':
-          return (b.total / b.bw) - (a.total / a.bw);
+          return (b.total / parseFloat(b.bw)) - (a.total / parseFloat(a.bw));
         default:
           return b.total - a.total;
       }
@@ -25,8 +26,8 @@ const LeaderboardWithSorting = ({ data }) => {
   }, [data, sortBy]);
 
   return (
-    <div>
-      <div>
+    <div className="leaderboard-container">
+      <div className="sort-select">
         <label htmlFor="sortSelect">Ordina per: </label>
         <select
           id="sortSelect"
@@ -41,7 +42,7 @@ const LeaderboardWithSorting = ({ data }) => {
           <option value="ratioDesc">Rapporto Totale/BW (maggiore)</option>
         </select>
       </div>
-      <table>
+      <table className="leaderboard-table">
         <thead>
           <tr>
             <th>Posizione</th>
@@ -56,15 +57,15 @@ const LeaderboardWithSorting = ({ data }) => {
         </thead>
         <tbody>
           {sortedData.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={item.username}>
               <td>{index + 1}</td>
-              <td>{item.name}</td>
+              <td>{item.username}</td>
               <td>{item.s}</td>
               <td>{item.b}</td>
               <td>{item.d}</td>
               <td>{item.bw}</td>
               <td>{item.total}</td>
-              <td>{(item.total / item.bw).toFixed(2)}</td>
+              <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
