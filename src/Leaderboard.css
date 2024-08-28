@@ -1,43 +1,87 @@
+/* Stile per il contenitore della classifica */
 .leaderboard-container {
-  font-family: Arial, sans-serif;
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  padding: 20px;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-.sort-select {
+/* Stile per il titolo della classifica */
+.leaderboard-title {
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 20px;
+  color: #ff4136;
 }
 
-.sort-select label {
+/* Contenitore per l'ordinamento */
+.sort-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Etichetta per l'ordinamento */
+.sort-label {
+  font-size: 12px;
+  color: #ff4136;
   margin-right: 10px;
 }
 
-.sort-select select {
-  padding: 5px;
-  font-size: 16px;
+/* Stile per il select di ordinamento */
+.sort-select {
+  padding: 8px;
+  font-size: 14px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #ff4136;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
+/* Stile per la tabella della classifica */
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.leaderboard-table th,
-.leaderboard-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
+/* Stile per l'header della tabella */
 .leaderboard-table th {
-  background-color: #f2f2f2;
+  background-color: #333;
+  color: #ff4136;
+  padding: 10px;
+  text-align: left;
   font-weight: bold;
 }
 
-.leaderboard-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+/* Stile per le righe della tabella */
+.leaderboard-table td {
+  padding: 15px 10px;
+  border-bottom: 1px solid #333;
 }
 
-.leaderboard-table tr:hover {
-  background-color: #f5f5f5;
+/* Stile per le righe alternate */
+.leaderboard-table tr:nth-child(even) {
+  background-color: #111;
+}
+
+/* Stile per il numero di posizione */
+.leaderboard-table .position {
+  font-weight: bold;
+  color: #ff4136;
+}
+
+/* Stile per il nome utente */
+.leaderboard-table .username {
+  font-weight: bold;
+}
+
+/* Stile per il punteggio totale */
+.leaderboard-table .total {
+  font-weight: bold;
+  color: #ff4136;
 }
