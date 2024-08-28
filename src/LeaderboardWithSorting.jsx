@@ -92,7 +92,7 @@ const LeaderboardWithSorting = ({ data }) => {
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.s}</td>}
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.b}</td>}
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.d}</td>}
-                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td classname="bw">{item.bw}</td>}
+                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td className="bw">{item.bw}</td>}
                       <td className="total">{item.total}</td>
                       {sortBy === 'ratioDesc' && (
                         <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
