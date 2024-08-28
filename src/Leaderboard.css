@@ -125,7 +125,7 @@
 .leaderboard-table th:nth-child(5),
 .leaderboard-table td:nth-child(3),
 .leaderboard-table td:nth-child(4),
-.leaderboard-table td:nth-child(5) { width: 10%; } /* S, B, D, */
+.leaderboard-table td:nth-child(5) { width: 7%; } /* S, B, D, */
 .leaderboard-table th:nth-child(6),
 .leaderboard-table td:nth-child(6) { width: 5%; } /* BW */
 .leaderboard-table th:nth-child(7),
