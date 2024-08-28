@@ -127,7 +127,7 @@
 .leaderboard-table td:nth-child(4),
 .leaderboard-table td:nth-child(5) { width: 7%; } /* S, B, D, */
 .leaderboard-table th:nth-child(6),
-.leaderboard-table td:nth-child(6) { width: 5%; } /* BW */
+.leaderboard-table td:nth-child(6) { width: 6%; } /* BW */
 .leaderboard-table th:nth-child(7),
 .leaderboard-table td:nth-child(7) { width: 8%; } /* Total */
 .leaderboard-table th:nth-child(8),
