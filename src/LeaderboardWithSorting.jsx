@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-//import 'src/Leaderboard.css';
+import 'src/Leaderboard.css';
 
 const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
