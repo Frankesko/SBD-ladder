@@ -13,7 +13,7 @@ body {
   padding: 20px;
   box-sizing: border-box;
   width: 100%;
-  padding-bottom: 60px; /* Per evitare che il contenuto sia nascosto dal menu */
+  padding-bottom: 80px; /* Per evitare che il contenuto sia nascosto dal menu */
 }
 
 .section-title {
@@ -100,6 +100,7 @@ body {
   justify-content: space-around;
   padding: 10px 0;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+  z-index: 1000;
 }
 
 .menu-bar button {
@@ -157,7 +158,7 @@ body {
   color: #ff4136;
 }
 
-.login-page, .profile-page {
+.login-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,6 +169,20 @@ body {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Cambiato da center a flex-start */
+  min-height: calc(100vh - 60px); /* Sottraiamo l'altezza della barra di menu */
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Aggiungiamo scroll solo se necessario */
 }
 
 .login-page form, .profile-section {
