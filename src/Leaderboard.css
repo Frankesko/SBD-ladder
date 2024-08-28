@@ -1,5 +1,5 @@
 .leaderboard-container {
-  width: 100%;
+  width: 90%;
   max-width: 450px;
   margin: 0 auto;
   padding: 10px;
@@ -42,7 +42,7 @@
   font-size: 14px;
   background-color: #333;
   color: #fff;
-  border: 0.5px solid #ff4136;
+  border: 1px solid #ff4136;
   border-radius: 5px;
   cursor: pointer;
   width: 120px;
