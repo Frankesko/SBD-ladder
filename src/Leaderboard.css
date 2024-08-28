@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px); /* Adjust 60px to match your bottom bar height */
-  }
+}
 
 .leaderboard-title {
   font-size: 24px;
