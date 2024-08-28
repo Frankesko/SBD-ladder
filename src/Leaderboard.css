@@ -53,8 +53,8 @@
   flex-grow: 1;
   overflow-y: auto;
   overflow-x: auto;
-  padding-right: 10px; /* Add right padding to ensure space on the right */
-  margin-right: -10px;
+  padding-right: 2px; /* Add right padding to ensure space on the right */
+  margin-right: -2px;
 }
 
 .leaderboard-table {
