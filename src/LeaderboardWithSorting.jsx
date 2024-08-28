@@ -29,7 +29,7 @@ const LeaderboardWithSorting = ({ data }) => {
     <div className="leaderboard-container">
       <h2>Classifica</h2>
       <div className="sort-container">
-        <span className="sort-label">Ordina</span>
+        <div className="sort-label">Ordina</div>
         <select
           className="sort-select"
           value={sortBy}
