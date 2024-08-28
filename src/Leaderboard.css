@@ -1,47 +1,39 @@
-/* Stile per il contenitore della classifica */
 .leaderboard-container {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
 }
 
-.leaderboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-/* Stile per il titolo della classifica */
 .leaderboard-title {
   font-size: 24px;
   font-weight: bold;
-  margin: 0 0 20px 0;
+  color: #ff4136;
+  margin: 0 0 15px 0;
+  text-align: center;
 }
 
 .leaderboard-content {
   margin-top: 15px;
 }
 
-/* Etichetta per l'ordinamento */
 .sort-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   margin-bottom: 15px;
 }
 
 .sort-label {
   color: #ff4136;
   font-size: 0.9em;
-  margin-bottom: 8px;
+  margin-right: 8px;
 }
 
-/* Stile per il select di ordinamento */
 .sort-select {
   padding: 8px;
   font-size: 14px;
@@ -53,45 +45,69 @@
   width: 120px;
 }
 
-/* Stile per la tabella della classifica */
+.table-container {
+  overflow-x: auto;
+}
+
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
-/* Stile per l'header della tabella */
 .leaderboard-table th {
   background-color: #333;
   color: #ff4136;
   padding: 10px;
   text-align: left;
   font-weight: bold;
+  white-space: nowrap;
 }
 
-/* Stile per le righe della tabella */
 .leaderboard-table td {
-  padding: 15px 10px;
+  padding: 10px;
   border-bottom: 1px solid #333;
 }
 
-/* Stile per le righe alternate */
 .leaderboard-table tr:nth-child(even) {
   background-color: #111;
 }
 
-/* Stile per il numero di posizione */
 .leaderboard-table .position {
   font-weight: bold;
   color: #ff4136;
 }
 
-/* Stile per il nome utente */
 .leaderboard-table .username {
   font-weight: bold;
 }
 
-/* Stile per il punteggio totale */
 .leaderboard-table .total {
   font-weight: bold;
   color: #ff4136;
+}
+
+@media screen and (max-width: 600px) {
+  .leaderboard-container {
+    padding: 5px;
+  }
+
+  .leaderboard-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .sort-container {
+    justify-content: center;
+  }
+
+  .sort-select {
+    width: 100px;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 8px 5px;
+    font-size: 0.9em;
+  }
 }
