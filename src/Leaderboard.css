@@ -27,6 +27,9 @@
 
 .sort-label {
   margin-bottom: 0.5rem;
+  color: #ff4136;  /* Red color */
+  font-size: 0.9em;  /* Slightly smaller font */
+  transform: translateY(-3px);  /* Move 3 pixels up */
 }
 
 /* Stile per il select di ordinamento */
