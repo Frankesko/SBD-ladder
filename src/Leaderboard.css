@@ -53,11 +53,13 @@
   flex-grow: 1;
   overflow-y: auto;
   overflow-x: auto;
+  padding-right: 10px; /* Add right padding to ensure space on the right */
 }
 
 .leaderboard-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0; /* Ensure no space between cells */
 }
 
 .leaderboard-table th {
@@ -68,11 +70,13 @@
   font-weight: bold;
   position: sticky;
   top: 0;
+  white-space: nowrap;
 }
 
 .leaderboard-table td {
   padding: 10px;
   border-bottom: 1px solid #333;
+  white-space: nowrap;
 }
 
 .leaderboard-table tr:nth-child(even) {
@@ -97,4 +101,9 @@
   color: #ff4136;
   margin: 20px 0 10px;
   font-size: 18px;
+}
+
+.leaderboard-table th:last-child,
+.leaderboard-table td:last-child {
+  padding-right: 15px; /* Add extra padding to the last column */
 }
