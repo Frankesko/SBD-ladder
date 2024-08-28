@@ -27,8 +27,8 @@ const LeaderboardWithSorting = ({ data }) => {
 
   return (
     <div className="leaderboard-container">
-      <div className="leaderboard-header">
-        <h2 className="leaderboard-title">Classifica</h2>
+      <h2 className="leaderboard-title">Classifica</h2>
+      <div className="leaderboard-content">
         <div className="sort-container">
           <div className="sort-label">Ordina</div>
           <select
@@ -44,35 +44,35 @@ const LeaderboardWithSorting = ({ data }) => {
             <option value="ratioDesc">Totale/BW</option>
           </select>
         </div>
-      </div>
-      <table className="leaderboard-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Nome</th>
-            <th>S</th>
-            <th>B</th>
-            <th>D</th>
-            <th>BW</th>
-            <th>T</th>
-            {sortBy === 'ratioDesc' && <th>T/BW</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((item, index) => (
-            <tr key={item.username}>
-              <td className="position">{index + 1}</td>
-              <td className="username">{item.username}</td>
-              <td>{item.s}</td>
-              <td>{item.b}</td>
-              <td>{item.d}</td>
-              <td>{item.bw}</td>
-              <td className="total">{item.total}</td>
-              {sortBy === 'ratioDesc' && <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>}
+        <table className="leaderboard-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nome</th>
+              <th>S</th>
+              <th>B</th>
+              <th>D</th>
+              <th>BW</th>
+              <th>T</th>
+              {sortBy === 'ratioDesc' && <th>T/BW</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedData.map((item, index) => (
+              <tr key={item.username}>
+                <td className="position">{index + 1}</td>
+                <td className="username">{item.username}</td>
+                <td>{item.s}</td>
+                <td>{item.b}</td>
+                <td>{item.d}</td>
+                <td>{item.bw}</td>
+                <td className="total">{item.total}</td>
+                {sortBy === 'ratioDesc' && <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
