@@ -17,20 +17,16 @@
   color: #ff4136;
 }
 
-/* Contenitore per l'ordinamento */
-.sort-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 /* Etichetta per l'ordinamento */
 .sort-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.sort-label {
+  margin-bottom: 0.5rem;
 }
 
 /* Stile per il select di ordinamento */
@@ -42,7 +38,6 @@
   border: 1px solid #ff4136;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 0.5rem;
 }
 
 /* Stile per la tabella della classifica */
