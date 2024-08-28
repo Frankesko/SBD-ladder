@@ -9,27 +9,31 @@
   font-family: Arial, sans-serif;
 }
 
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 /* Stile per il titolo della classifica */
 .leaderboard-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #ff4136;
 }
 
 /* Etichetta per l'ordinamento */
 .sort-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 1rem;
+  align-items: flex-end;
 }
 
 .sort-label {
-  margin-bottom: 0.5rem;
-  color: #ff4136;  /* Red color */
-  font-size: 0.9em;  /* Slightly smaller font */
-  transform: translateY(-1px);  /* Move 3 pixels up */
+  color: #ff4136;
+  font-size: 0.9em;
+  margin-bottom: 4px;
 }
 
 /* Stile per il select di ordinamento */
@@ -41,6 +45,7 @@
   border: 1px solid #ff4136;
   border-radius: 5px;
   cursor: pointer;
+  width: 120px;
 }
 
 /* Stile per la tabella della classifica */
