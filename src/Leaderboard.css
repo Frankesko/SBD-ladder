@@ -117,7 +117,7 @@
 }
 
 .leaderboard-table th:nth-child(1),
-.leaderboard-table td:nth-child(1) { width: 3%; } /* Position */
+.leaderboard-table td:nth-child(1) { width: 2%; } /* Position */
 .leaderboard-table th:nth-child(2),
 .leaderboard-table td:nth-child(2) { width: 10%; } /* Username */
 .leaderboard-table th:nth-child(3),
@@ -129,6 +129,6 @@
 .leaderboard-table td:nth-child(5),
 .leaderboard-table td:nth-child(6) { width: 10%; } /* S, B, D, BW */
 .leaderboard-table th:nth-child(7),
-.leaderboard-table td:nth-child(7) { width: 15%; } /* Total */
+.leaderboard-table td:nth-child(7) { width: 10%; } /* Total */
 .leaderboard-table th:nth-child(8),
-.leaderboard-table td:nth-child(8) { width: 15%; } /* Total/BW */
+.leaderboard-table td:nth-child(8) { width: 10%; } /* Total/BW */
