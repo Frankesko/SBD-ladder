@@ -5,7 +5,7 @@ import './App.css';
 import bcrypt from 'bcryptjs';
 import PasswordInput from './PasswordInput';
 import { User, Trophy, Settings } from 'lucide-react';
-
+import LeaderboardWithSorting from './LeaderboardWithSorting';
 
 // Configurazione Firebase
 const firebaseConfig = {
@@ -36,7 +36,8 @@ function App() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [bw, setBw] = useState('');
-
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  
   useEffect(() => {
     // Controlla se ci sono credenziali salvate nel localStorage
     const savedUsername = localStorage.getItem('username');
@@ -131,7 +132,7 @@ function App() {
     alert('Dati salvati con successo');
   };
 
-  const loadLeaderboard = async () => {
+   const loadLeaderboard = async () => {
     const usersRef = ref(db, 'users');
     const snapshot = await get(usersRef);
     const leaderboardData = [];
@@ -146,8 +147,7 @@ function App() {
         total: (userData.s || 0) + (userData.b || 0) + (userData.d || 0)
       });
     });
-    leaderboardData.sort((a, b) => b.total - a.total);
-    setLeaderboard(leaderboardData);
+    setLeaderboardData(leaderboardData);
   };
 
   useEffect(() => {
@@ -390,43 +390,31 @@ function App() {
   const renderLeaderboardPage = () => (
     <div className="leaderboard">
       <h2>Classifica</h2>
-      <ul>
-        {leaderboard.map((user, index) => (
-          <li key={user.username}>
-            <span className="rank">{index + 1}.</span>
-            <span className="username">{user.username}</span>
-            <span className="score">S: {user.s}</span>
-            <span className="score">B: {user.b}</span>
-            <span className="score">D: {user.d}</span>
-            <span className="bw"><strong>BW: {user.bw}</strong></span>
-            <span className="total"><strong>Total: {user.total}</strong></span>
-          </li>
-        ))}
-      </ul>
+      <LeaderboardWithSorting data={leaderboardData} />
     </div>
   );
 
-return (
-  <div className="app">
-    {currentPage === 'Login' && renderLoginPage()}
-    {currentPage === 'Me' && renderMePage()}
-    {currentPage === 'Leaderboard' && renderLeaderboardPage()}
-    {currentPage === 'Profile' && renderProfilePage()}
-    {currentPage !== 'Login' && (
-      <div className="menu-bar">
-        <button onClick={() => setCurrentPage('Me')}>
-          <User size={24} />
-        </button>
-        <button onClick={() => setCurrentPage('Leaderboard')}>
-          <Trophy size={24} />
-        </button>
-        <button onClick={() => setCurrentPage('Profile')}>
-          <Settings size={24} />
-        </button>
-      </div>
-    )}
-  </div>
-);
+  return (
+    <div className="app">
+      {currentPage === 'Login' && renderLoginPage()}
+      {currentPage === 'Me' && renderMePage()}
+      {currentPage === 'Leaderboard' && renderLeaderboardPage()}
+      {currentPage === 'Profile' && renderProfilePage()}
+      {currentPage !== 'Login' && (
+        <div className="menu-bar">
+          <button onClick={() => setCurrentPage('Me')}>
+            <User size={24} />
+          </button>
+          <button onClick={() => setCurrentPage('Leaderboard')}>
+            <Trophy size={24} />
+          </button>
+          <button onClick={() => setCurrentPage('Profile')}>
+            <Settings size={24} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function getColor(percentage) {
