@@ -11,8 +11,7 @@
 .leaderboard-title {
   font-size: 24px;
   font-weight: bold;
-  color: #ff4136;
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
 }
 
 .leaderboard-content {
