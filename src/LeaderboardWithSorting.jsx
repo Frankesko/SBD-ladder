@@ -51,8 +51,8 @@ const LeaderboardWithSorting = ({ data }) => {
             <th>B</th>
             <th>D</th>
             <th>BW</th>
-            <th>Totale</th>
-            <th>Coefficiente</th>
+            <th>T</th>
+            <th>T/BW</th>
           </tr>
         </thead>
         <tbody>
