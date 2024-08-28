@@ -8,7 +8,7 @@
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px); /* Adjust 60px to match your bottom bar height */
+  height: calc(100vh - 60px);
   box-sizing: border-box;
 }
 
@@ -54,12 +54,16 @@
   overflow-y: auto;
   overflow-x: auto;
   padding-right: 10px; /* Add right padding to ensure space on the right */
+  margin-right: -10px;
 }
 
 .leaderboard-table {
   width: 100%;
+  min-width: calc(100% - 20px); /* Ensure minimum width with margin */
+  max-width: calc(100% - 20px); /* Limit maximum width */
+  table-layout: fixed; /* Use fixed table layout */
   border-collapse: separate;
-  border-spacing: 0; /* Ensure no space between cells */
+  border-spacing: 0;
 }
 
 .leaderboard-table th {
@@ -71,12 +75,16 @@
   position: sticky;
   top: 0;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
 }
 
 .leaderboard-table td {
   padding: 10px;
   border-bottom: 1px solid #333;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
 }
 
 .leaderboard-table tr:nth-child(even) {
@@ -107,3 +115,20 @@
 .leaderboard-table td:last-child {
   padding-right: 15px; /* Add extra padding to the last column */
 }
+
+.leaderboard-table th:nth-child(1),
+.leaderboard-table td:nth-child(1) { width: 10%; } /* Position */
+.leaderboard-table th:nth-child(2),
+.leaderboard-table td:nth-child(2) { width: 30%; } /* Username */
+.leaderboard-table th:nth-child(3),
+.leaderboard-table th:nth-child(4),
+.leaderboard-table th:nth-child(5),
+.leaderboard-table th:nth-child(6),
+.leaderboard-table td:nth-child(3),
+.leaderboard-table td:nth-child(4),
+.leaderboard-table td:nth-child(5),
+.leaderboard-table td:nth-child(6) { width: 10%; } /* S, B, D, BW */
+.leaderboard-table th:nth-child(7),
+.leaderboard-table td:nth-child(7) { width: 15%; } /* Total */
+.leaderboard-table th:nth-child(8),
+.leaderboard-table td:nth-child(8) { width: 15%; } /* Total/BW */
