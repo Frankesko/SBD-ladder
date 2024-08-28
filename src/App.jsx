@@ -27,9 +27,9 @@ function App() {
   const [currentPage, setCurrentPage] = useState('Login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [topNumbers, setTopNumbers] = useState([0, 0, 0, 0]);
-  const [bottomNumbers, setBottomNumbers] = useState([0, 0, 0, 0]);
-  const [percentages, setPercentages] = useState([0, 0, 0, 0]);
+  const [topNumbers, setTopNumbers] = useState(['', '', '', '']);
+  const [bottomNumbers, setBottomNumbers] = useState(['', '', '', '']);
+  const [percentages, setPercentages] = useState(['', '', '', '']);
   const [leaderboard, setLeaderboard] = useState([]);
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -94,16 +94,30 @@ function App() {
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      setBottomNumbers([userData.s || 0, userData.b || 0, userData.d || 0, (userData.s || 0) + (userData.b || 0) + (userData.d || 0)]);
-      setTopNumbers([userData.sObj || 0, userData.bObj || 0, userData.dObj || 0, (userData.sObj || 0) + (userData.bObj || 0) + (userData.dObj || 0)]);
+      setBottomNumbers([
+        userData.s || '',
+        userData.b || '',
+        userData.d || '',
+        calculateTotal([userData.s, userData.b, userData.d])
+      ]);
+      setTopNumbers([
+        userData.sObj || '',
+        userData.bObj || '',
+        userData.dObj || '',
+        calculateTotal([userData.sObj, userData.bObj, userData.dObj])
+      ]);
       setBw(userData.bw || '');
     }
   };
 
+  const calculateTotal = (numbers) => {
+    return numbers.reduce((total, num) => total + (num ? parseFloat(num) : 0), 0).toString();
+  };
+
   const handleNumberChange = (index, isTop, newValue) => {
     const newNumbers = isTop ? [...topNumbers] : [...bottomNumbers];
-    newNumbers[index] = Number(newValue);
-    newNumbers[3] = newNumbers.slice(0, 3).reduce((a, b) => a + b, 0);
+    newNumbers[index] = newValue;
+    newNumbers[3] = calculateTotal(newNumbers.slice(0, 3));
     if (isTop) {
       setTopNumbers(newNumbers);
     } else {
@@ -112,27 +126,29 @@ function App() {
   };
 
   useEffect(() => {
-    const newPercentages = topNumbers.map((top, index) => 
-      top !== 0 ? (bottomNumbers[index] / top) * 100 : 0
-    );
+    const newPercentages = topNumbers.map((top, index) => {
+      const topValue = parseFloat(top);
+      const bottomValue = parseFloat(bottomNumbers[index]);
+      return topValue && bottomValue ? (bottomValue / topValue) * 100 : '';
+    });
     setPercentages(newPercentages);
   }, [topNumbers, bottomNumbers]);
 
   const handleSave = async () => {
     const userRef = ref(db, `users/${username.toLowerCase().replace(/\s/g, '')}`);
     await update(userRef, {
-      s: bottomNumbers[0],
-      b: bottomNumbers[1],
-      d: bottomNumbers[2],
-      sObj: topNumbers[0],
-      bObj: topNumbers[1],
-      dObj: topNumbers[2],
-      bw: bw
+      s: bottomNumbers[0] || null,
+      b: bottomNumbers[1] || null,
+      d: bottomNumbers[2] || null,
+      sObj: topNumbers[0] || null,
+      bObj: topNumbers[1] || null,
+      dObj: topNumbers[2] || null,
+      bw: bw || null
     });
     alert('Dati salvati con successo');
   };
 
-   const loadLeaderboard = async () => {
+  const loadLeaderboard = async () => {
     const usersRef = ref(db, 'users');
     const snapshot = await get(usersRef);
     const leaderboardData = [];
@@ -140,11 +156,11 @@ function App() {
       const userData = childSnapshot.val();
       leaderboardData.push({
         username: userData.username,
-        s: userData.s || 0,
-        b: userData.b || 0,
-        d: userData.d || 0,
+        s: userData.s || '',
+        b: userData.b || '',
+        d: userData.d || '',
         bw: userData.bw || '',
-        total: (userData.s || 0) + (userData.b || 0) + (userData.d || 0)
+        total: calculateTotal([userData.s, userData.b, userData.d])
       });
     });
     setLeaderboardData(leaderboardData);
@@ -313,11 +329,11 @@ function App() {
             <div
               className="percentage-bar"
               style={{
-                width: `${percentages[0]}%`,
-                backgroundColor: getColor(percentages[0]),
+                width: `${percentages[0] || 0}%`,
+                backgroundColor: getColor(percentages[0] || 0),
               }}
             ></div>
-            <span className="percentage-text">{percentages[0].toFixed(2)}%</span>
+            <span className="percentage-text">{percentages[0] ? `${percentages[0].toFixed(2)}%` : ''}</span>
           </div>
           <div className="label">D</div>
           <input
@@ -330,11 +346,11 @@ function App() {
             <div
               className="percentage-bar"
               style={{
-                width: `${percentages[2]}%`,
-                backgroundColor: getColor(percentages[2]),
+                width: `${percentages[2] || 0}%`,
+                backgroundColor: getColor(percentages[2] || 0),
               }}
             ></div>
-            <span className="percentage-text">{percentages[2].toFixed(2)}%</span>
+            <span className="percentage-text">{percentages[2] ? `${percentages[2].toFixed(2)}%` : ''}</span>
           </div>
         </div>
         <div className="column">
@@ -349,11 +365,11 @@ function App() {
             <div
               className="percentage-bar"
               style={{
-                width: `${percentages[1]}%`,
-                backgroundColor: getColor(percentages[1]),
+                width: `${percentages[1] || 0}%`,
+                backgroundColor: getColor(percentages[1] || 0),
               }}
             ></div>
-            <span className="percentage-text">{percentages[1].toFixed(2)}%</span>
+            <span className="percentage-text">{percentages[1] ? `${percentages[1].toFixed(2)}%` : ''}</span>
           </div>
           <div className="label">T</div>
           <input
@@ -366,11 +382,11 @@ function App() {
             <div
               className="percentage-bar"
               style={{
-                width: `${percentages[3]}%`,
-                backgroundColor: getColor(percentages[3]),
+                width: `${percentages[3] || 0}%`,
+                backgroundColor: getColor(percentages[3] || 0),
               }}
             ></div>
-            <span className="percentage-text">{percentages[3].toFixed(2)}%</span>
+            <span className="percentage-text">{percentages[3] ? `${percentages[3].toFixed(2)}%` : ''}</span>
           </div>
         </div>
       </div>
