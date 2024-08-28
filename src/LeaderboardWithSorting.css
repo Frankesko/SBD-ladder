@@ -2,43 +2,42 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-}
-
-/* Stile per l'header della classifica */
-.leaderboard-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* Adjust 60px to match your bottom bar height */
 }
 
-/* Stile per il titolo della classifica */
 .leaderboard-title {
   font-size: 24px;
   font-weight: bold;
   color: #ff4136;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
-/* Contenitore per l'ordinamento */
+.leaderboard-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .sort-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-bottom: 10px;
 }
 
-/* Etichetta per l'ordinamento */
 .sort-label {
   color: #ff4136;
   font-size: 0.9em;
   margin-bottom: 4px;
 }
 
-/* Stile per il select di ordinamento */
 .sort-select {
   padding: 8px;
   font-size: 14px;
@@ -50,44 +49,44 @@
   width: 120px;
 }
 
-/* Stile per la tabella della classifica */
+.table-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* Stile per l'header della tabella */
 .leaderboard-table th {
   background-color: #333;
   color: #ff4136;
   padding: 10px;
   text-align: left;
   font-weight: bold;
+  position: sticky;
+  top: 0;
 }
 
-/* Stile per le righe della tabella */
 .leaderboard-table td {
-  padding: 15px 10px;
+  padding: 10px;
   border-bottom: 1px solid #333;
 }
 
-/* Stile per le righe alternate */
 .leaderboard-table tr:nth-child(even) {
   background-color: #111;
 }
 
-/* Stile per il numero di posizione */
 .leaderboard-table .position {
   font-weight: bold;
   color: #ff4136;
 }
 
-/* Stile per il nome utente */
 .leaderboard-table .username {
   font-weight: bold;
 }
 
-/* Stile per il punteggio totale */
 .leaderboard-table .total {
   font-weight: bold;
   color: #ff4136;
