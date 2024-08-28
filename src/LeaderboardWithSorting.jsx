@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import './Leaderboard.css'; // Assicurati di creare questo file CSS
+import './Leaderboard.css';
 
 const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
@@ -27,10 +27,11 @@ const LeaderboardWithSorting = ({ data }) => {
 
   return (
     <div className="leaderboard-container">
-      <div className="sort-select">
-        <label htmlFor="sortSelect">Ordina per: </label>
+      <h2 className="leaderboard-title">Classifica</h2>
+      <div className="sort-container">
+        <span className="sort-label">Ordina</span>
         <select
-          id="sortSelect"
+          className="sort-select"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -45,26 +46,26 @@ const LeaderboardWithSorting = ({ data }) => {
       <table className="leaderboard-table">
         <thead>
           <tr>
-            <th>Posizione</th>
+            <th>Pos</th>
             <th>Nome</th>
             <th>S</th>
             <th>B</th>
             <th>D</th>
             <th>BW</th>
             <th>Totale</th>
-            <th>Rapporto Totale/BW</th>
+            <th>Coefficiente</th>
           </tr>
         </thead>
         <tbody>
           {sortedData.map((item, index) => (
             <tr key={item.username}>
-              <td>{index + 1}</td>
-              <td>{item.username}</td>
+              <td className="position">{index + 1}</td>
+              <td className="username">{item.username}</td>
               <td>{item.s}</td>
               <td>{item.b}</td>
               <td>{item.d}</td>
               <td>{item.bw}</td>
-              <td>{item.total}</td>
+              <td className="total">{item.total}</td>
               <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
             </tr>
           ))}
