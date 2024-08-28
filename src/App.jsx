@@ -389,7 +389,6 @@ function App() {
 
   const renderLeaderboardPage = () => (
     <div className="leaderboard">
-      <h2>Classifica</h2>
       <LeaderboardWithSorting data={leaderboardData} />
     </div>
   );
