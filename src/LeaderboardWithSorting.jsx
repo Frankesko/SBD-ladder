@@ -74,7 +74,7 @@ const LeaderboardWithSorting = ({ data }) => {
               <table className="leaderboard-table">
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th></th>
                     <th>Nome</th>
                     {sortBy !== 'ratioDesc' && <th>S</th>}
                     {sortBy !== 'ratioDesc' && <th>B</th>}
