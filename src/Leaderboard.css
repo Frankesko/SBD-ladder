@@ -116,18 +116,18 @@
   padding-right: 15px; /* Add extra padding to the last column */
 }
 
-.leaderboard-table th:nth-child(1),
-.leaderboard-table td:nth-child(1) { width: 1%; } /* Position */
+.leaderboard-table th:nth-child(1), 
+.leaderboard-table td:nth-child(1) { width: 2%; } /* Position */
 .leaderboard-table th:nth-child(2),
 .leaderboard-table td:nth-child(2) { width: 10%; } /* Username */
 .leaderboard-table th:nth-child(3),
 .leaderboard-table th:nth-child(4),
 .leaderboard-table th:nth-child(5),
-.leaderboard-table th:nth-child(6),
 .leaderboard-table td:nth-child(3),
 .leaderboard-table td:nth-child(4),
-.leaderboard-table td:nth-child(5),
-.leaderboard-table td:nth-child(6) { width: 10%; } /* S, B, D, BW */
+.leaderboard-table td:nth-child(5) { width: 10%; } /* S, B, D, */
+.leaderboard-table th:nth-child(6),
+.leaderboard-table td:nth-child(6) { width: 5%; } /* BW */
 .leaderboard-table th:nth-child(7),
 .leaderboard-table td:nth-child(7) { width: 10%; } /* Total */
 .leaderboard-table th:nth-child(8),
