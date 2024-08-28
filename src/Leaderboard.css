@@ -129,6 +129,6 @@
 .leaderboard-table th:nth-child(6),
 .leaderboard-table td:nth-child(6) { width: 5%; } /* BW */
 .leaderboard-table th:nth-child(7),
-.leaderboard-table td:nth-child(7) { width: 10%; } /* Total */
+.leaderboard-table td:nth-child(7) { width: 8%; } /* Total */
 .leaderboard-table th:nth-child(8),
 .leaderboard-table td:nth-child(8) { width: 10%; } /* Total/BW */
