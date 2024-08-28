@@ -27,6 +27,7 @@ const LeaderboardWithSorting = ({ data }) => {
 
   return (
     <div className="leaderboard-container">
+      <h2>Classifica</h2>
       <div className="sort-container">
         <span className="sort-label">Ordina</span>
         <select
