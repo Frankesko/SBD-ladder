@@ -52,7 +52,7 @@ const LeaderboardWithSorting = ({ data }) => {
             <th>D</th>
             <th>BW</th>
             <th>T</th>
-            <th>T/BW</th>
+            {sortBy === 'ratioDesc' && <th>T/BW</th>}
           </tr>
         </thead>
         <tbody>
@@ -65,7 +65,7 @@ const LeaderboardWithSorting = ({ data }) => {
               <td>{item.d}</td>
               <td>{item.bw}</td>
               <td className="total">{item.total}</td>
-              <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+              {sortBy === 'ratioDesc' && <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>}
             </tr>
           ))}
         </tbody>
