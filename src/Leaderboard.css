@@ -124,18 +124,18 @@
 }
 
 .leaderboard-table th:nth-child(1), 
-.leaderboard-table td:nth-child(1) { width: 1.5%; } /* Position */
+.leaderboard-table td:nth-child(1) { width: 5%; } /* Position */
 .leaderboard-table th:nth-child(2),
-.leaderboard-table td:nth-child(2) { width: 9.5%; } /* Username */
+.leaderboard-table td:nth-child(2) { width: 20%; } /* Username */
 .leaderboard-table th:nth-child(3),
 .leaderboard-table th:nth-child(4),
 .leaderboard-table th:nth-child(5),
 .leaderboard-table td:nth-child(3),
 .leaderboard-table td:nth-child(4),
-.leaderboard-table td:nth-child(5) { width: 6%; } /* S, B, D, */
+.leaderboard-table td:nth-child(5) { width: 15%; } /* S, B, D, */
 .leaderboard-table th:nth-child(6),
-.leaderboard-table td:nth-child(6) { width: 10%; } /* BW */
+.leaderboard-table td:nth-child(6) { width: 20%; } /* BW */
 .leaderboard-table th:nth-child(7),
-.leaderboard-table td:nth-child(7) { width: 10%; } /* Total */
+.leaderboard-table td:nth-child(7) { width: 25%; } /* Total */
 .leaderboard-table th:nth-child(8),
-.leaderboard-table td:nth-child(8) { width: 10%; } /* Total/BW */
+.leaderboard-table td:nth-child(8) { width: 20%; } /* Total/BW */
