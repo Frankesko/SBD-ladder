@@ -1,4 +1,4 @@
-import React, { useState, useMemo }  from 'react';
+import React, { useState, useMemo } from 'react';
 import './Leaderboard.css';
 
 const LeaderboardWithSorting = ({ data }) => {
@@ -14,7 +14,6 @@ const LeaderboardWithSorting = ({ data }) => {
         case 'dDesc':
           return b.d - a.d;
         case 'bwDesc':
-          // Group by weight category, then sort by total within each category
           const categoryA = Math.floor(parseFloat(a.bw) / 10) * 10;
           const categoryB = Math.floor(parseFloat(b.bw) / 10) * 10;
           if (categoryA === categoryB) {
@@ -77,12 +76,16 @@ const LeaderboardWithSorting = ({ data }) => {
                   <tr>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>S</th>
-                    <th>B</th>
-                    <th>D</th>
-                    <th>BW</th>
-                    <th>T</th>
+                    <th>{sortBy === 'ratioDesc' ? 'Totale' : 'S'}</th>
+                    <th>{sortBy === 'ratioDesc' ? 'BW' : 'B'}</th>
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
+                    {!sortBy === 'ratioDesc' && (
+                      <>
+                        <th>D</th>
+                        <th>Bw</th>
+                        <th>T</th>
+                      </>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -90,13 +93,20 @@ const LeaderboardWithSorting = ({ data }) => {
                     <tr key={item.username}>
                       <td className="position">{index + 1}</td>
                       <td className="username">{item.username}</td>
-                      <td>{item.s}</td>
-                      <td>{item.b}</td>
-                      <td>{item.d}</td>
-                      <td>{item.bw}</td>
-                      <td className="total">{item.total}</td>
-                      {sortBy === 'ratioDesc' && (
-                        <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                      {sortBy === 'ratioDesc' ? (
+                        <>
+                          <td className="total">{item.total}</td>
+                          <td>{item.bw}</td>
+                          <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                        </>
+                      ) : (
+                        <>
+                          <td>{item.s}</td>
+                          <td>{item.b}</td>
+                          <td>{item.d}</td>
+                          <td>{item.bw}</td>
+                          <td className="total">{item.total}</td>
+                        </>
                       )}
                     </tr>
                   ))}
