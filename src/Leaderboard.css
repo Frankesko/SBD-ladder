@@ -115,6 +115,7 @@
 .leaderboard-table td:last-child {
   padding-right: 15px; /* Add extra padding to the last column */
   color: #ff4136;
+  font-weight: bold;
 }
 
 .leaderboard-table th:nth-child(1), 
