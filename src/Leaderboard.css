@@ -106,6 +106,10 @@
   color: #ff4136;
 }
 
+.leaderboard-table .total {
+  font-weight: bold;
+}
+
 .weight-category {
   color: #ff4136;
   margin: 20px 0 10px;
