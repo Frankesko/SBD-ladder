@@ -59,8 +59,8 @@
 
 .leaderboard-table {
   width: 100%;
-  min-width: calc(100% - 2px); /* Ensure minimum width with margin */
-  max-width: calc(100% - 2px); /* Limit maximum width */
+  min-width: calc(100%); /* Ensure minimum width with margin */
+  max-width: calc(100%); /* Limit maximum width */
   table-layout: fixed; /* Use fixed table layout */
   border-collapse: separate;
   border-spacing: 0;
