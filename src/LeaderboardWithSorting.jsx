@@ -76,10 +76,10 @@ const LeaderboardWithSorting = ({ data }) => {
                   <tr>
                     <th></th>
                     <th>Nome</th>
-                    {sortBy !== 'ratioDesc' && <th>S</th>}
-                    {sortBy !== 'ratioDesc' && <th>B</th>}
-                    {sortBy !== 'ratioDesc' && <th>D</th>}
-                    <th>Bw</th>
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>S</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>B</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>D</th>}
+                    {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <th>BW</th>}
                     <th>T</th>
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
                   </tr>
@@ -89,10 +89,10 @@ const LeaderboardWithSorting = ({ data }) => {
                     <tr key={item.username}>
                       <td className="position">{index + 1}</td>
                       <td className="username">{item.username}</td>
-                      {sortBy !== 'ratioDesc' && <td>{item.s}</td>}
-                      {sortBy !== 'ratioDesc' && <td>{item.b}</td>}
-                      {sortBy !== 'ratioDesc' && <td>{item.d}</td>}
-                      <td>{item.bw}</td>
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.s}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.b}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.d}</td>}
+                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td>{item.bw}</td>}
                       <td className="total">{item.total}</td>
                       {sortBy === 'ratioDesc' && (
                         <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
