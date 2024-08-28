@@ -79,7 +79,7 @@ const LeaderboardWithSorting = ({ data }) => {
                     {sortBy !== 'ratioDesc' && <th>S</th>}
                     {sortBy !== 'ratioDesc' && <th>B</th>}
                     {sortBy !== 'ratioDesc' && <th>D</th>}
-                    <th>BW</th>
+                    <th>Bw</th>
                     <th>T</th>
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
                   </tr>
