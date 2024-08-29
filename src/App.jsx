@@ -37,6 +37,7 @@ function App() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [bw, setBw] = useState('');
   const [leaderboardData, setLeaderboardData] = useState([]);
+  const [gender, setGender] = useState('');
   
   useEffect(() => {
     // Controlla se ci sono credenziali salvate nel localStorage
@@ -107,6 +108,7 @@ function App() {
         calculateTotal([userData.sObj, userData.bObj, userData.dObj])
       ]);
       setBw(userData.bw || '');
+      setGender(userData.gender || '');
     }
   };
 
@@ -134,7 +136,7 @@ function App() {
     setPercentages(newPercentages);
   }, [topNumbers, bottomNumbers]);
 
-  const handleSave = async () => {
+    const handleSave = async () => {
     const userRef = ref(db, `users/${username.toLowerCase().replace(/\s/g, '')}`);
     await update(userRef, {
       s: bottomNumbers[0] || null,
@@ -143,7 +145,8 @@ function App() {
       sObj: topNumbers[0] || null,
       bObj: topNumbers[1] || null,
       dObj: topNumbers[2] || null,
-      bw: bw || null
+      bw: bw || null,
+      gender: gender || null
     });
     alert('Dati salvati con successo');
   };
@@ -390,14 +393,28 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="bw-input">
-        <div className="label">BW</div>
-        <input
-          type="number"
-          value={bw}
-          onChange={(e) => setBw(e.target.value)}
-          className="number-input"
-        />
+      <div className="bw-gender-container">
+        <div className="bw-input">
+          <div className="label">BW</div>
+          <input
+            type="number"
+            value={bw}
+            onChange={(e) => setBw(e.target.value)}
+            className="number-input"
+          />
+        </div>
+        <div className="gender-input">
+          <div className="label">Genere</div>
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="gender-select"
+          >
+            <option value="">Seleziona</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </div>
       </div>
       <button onClick={handleSave} className="save-button">Salva</button>
     </>
