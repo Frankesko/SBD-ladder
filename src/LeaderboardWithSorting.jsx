@@ -76,7 +76,7 @@ const LeaderboardWithSorting = ({ data }) => {
             <option value="bwDesc">Categoria</option>
             <option value="totalDesc">Totale</option>
             <option value="ratioDesc">Totale/BW</option>
-            <option value="ratioDesc">IPF points</option>
+            <option value="ipfDesc">IPF points</option>
           </select>
         </div>
         <div className="table-wrapper">
@@ -94,7 +94,7 @@ const LeaderboardWithSorting = ({ data }) => {
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <th>Squat</th>}
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <th>Bench</th>}
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <th>Deadlift</th>}
-                    {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <th>BW</th>}
+                    {(sortBy === 'ratioDesc' || sortBy === 'bwDesc' || sortBy === 'ipfDesc') && <th>BW</th>}
                     {sortBy !== 'ipfDesc' && <th>Totale</th>}
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
                     {sortBy === 'ipfDesc' && <th>IPF Points</th>}
@@ -109,7 +109,7 @@ const LeaderboardWithSorting = ({ data }) => {
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <td>{item.s}</td>}
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <td>{item.b}</td>}
                       {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfDesc' && <td>{item.d}</td>}
-                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td className="bw">{item.bw}</td>}
+                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc' || sortBy === 'ipfDesc') && <td className="bw">{item.bw}</td>}
                       {sortBy !== 'ipfDesc' && <td className="total">{item.total}</td>}
                       {sortBy === 'ratioDesc' && (
                         <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
