@@ -74,7 +74,8 @@ const LeaderboardWithSorting = ({ data }) => {
               <table className="leaderboard-table">
                 <thead>
                   <tr>
-                    <th className="position-name">Pos. Nome</th>
+                    <th></th>
+                    <th>Nome</th>
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>S</th>}
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>B</th>}
                     {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>D</th>}
@@ -83,23 +84,22 @@ const LeaderboardWithSorting = ({ data }) => {
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
                   </tr>
                 </thead>
-               <tbody>
-                {items.map((item, index) => (
-                  <tr key={item.username}>
-                    <td className="position-name">
-                      <span className="position">{index + 1}</span> {item.username}
-                    </td>
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.s}</td>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.b}</td>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.d}</td>}
-                    {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td className="bw">{item.bw}</td>}
-                    <td className="total">{item.total}</td>
-                    {sortBy === 'ratioDesc' && (
-                      <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
+                <tbody>
+                  {items.map((item, index) => (
+                    <tr key={item.username}>
+                      <td className="position">{index + 1}</td>
+                      <td className="username">{item.username}</td>
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.s}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.b}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.d}</td>}
+                      {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td className="bw">{item.bw}</td>}
+                      <td className="total">{item.total}</td>
+                      {sortBy === 'ratioDesc' && (
+                        <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </React.Fragment>
           ))}
