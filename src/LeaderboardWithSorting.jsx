@@ -55,9 +55,9 @@ const LeaderboardWithSorting = ({ data }) => {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="sDesc">S</option>
-            <option value="bDesc">B</option>
-            <option value="dDesc">D</option>
+            <option value="sDesc">Squat</option>
+            <option value="bDesc">Bench</option>
+            <option value="dDesc">Deadlift</option>
             <option value="bwDesc">Categoria</option>
             <option value="totalDesc">Totale</option>
             <option value="ratioDesc">Totale/BW</option>
