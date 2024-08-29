@@ -245,7 +245,16 @@ body {
 }
 
 .gender-select {
-  appearance: none;
+  width: 80%;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #ff4136;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  appearance: none; /* Rimuove lo stile predefinito del browser */
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
