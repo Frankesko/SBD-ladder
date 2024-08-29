@@ -163,7 +163,9 @@ function App() {
         b: userData.b || '',
         d: userData.d || '',
         bw: userData.bw || '',
-        total: calculateTotal([userData.s, userData.b, userData.d])
+        gender: userData.gender || '',
+        total: calculateTotal([userData.s, userData.b, userData.d]),
+        
       });
     });
     setLeaderboardData(leaderboardData);
