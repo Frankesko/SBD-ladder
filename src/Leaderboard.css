@@ -108,7 +108,7 @@
   font-weight: bold;
 }
 .leaderboard-table th:nth-child(1), 
-.leaderboard-table td:nth-child(1) { width: 5%; } 
+.leaderboard-table td:nth-child(1) { width: 7%; } 
 .leaderboard-table th:nth-child(2),
 .leaderboard-table td:nth-child(2) { width: 20%; }
 .leaderboard-table th:nth-child(3),
