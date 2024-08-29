@@ -18,8 +18,21 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "orientation": "portrait",
+  "description": "Kuma Powerlifting App",
+  "lang": "it",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "categories": ["fitness", "sports"],
+  "screenshots": [],
+  "shortcuts": [],
+  "apple-mobile-web-app-capable": "yes",
+  "apple-mobile-web-app-status-bar-style": "black",
+  "apple-mobile-web-app-title": "Kuma Powerlifting"
 }
