@@ -4,6 +4,16 @@ import './Leaderboard.css';
 const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
 
+  const calculateIPFPoints = (total, bw, gender) => {
+    const lnBw = Math.log(bw);
+    if (gender === 'M') {
+      return 500 + 100 * ((total - (310.6700 * lnBw - 857.7850)) / (53.2160 * lnBw - 147.0835));
+    } else if (gender === 'F') {
+      return 500 + 100 * ((total - (125.1435 * lnBw - 228.0300)) / (34.5246 * lnBw - 86.8301));
+    }
+    return 0; // Default value if gender is not specified
+  };
+
   const sortedAndGroupedData = useMemo(() => {
     const sorted = [...data].sort((a, b) => {
       switch (sortBy) {
@@ -24,6 +34,8 @@ const LeaderboardWithSorting = ({ data }) => {
           return b.total - a.total;
         case 'ratioDesc':
           return b.total / parseFloat(b.bw) - a.total / parseFloat(a.bw);
+        case 'ipfPointsDesc':
+          return calculateIPFPoints(b.total, parseFloat(b.bw), b.gender) - calculateIPFPoints(a.total, parseFloat(a.bw), a.gender);
         default:
           return b.total - a.total;
       }
@@ -61,6 +73,7 @@ const LeaderboardWithSorting = ({ data }) => {
             <option value="bwDesc">Categoria</option>
             <option value="totalDesc">Totale</option>
             <option value="ratioDesc">Totale/BW</option>
+            <option value="ipfPointsDesc">IPF Points</option>
           </select>
         </div>
         <div className="table-wrapper">
@@ -75,12 +88,13 @@ const LeaderboardWithSorting = ({ data }) => {
                 <thead>
                   <tr>
                     <th className="position-name">Nome</th>
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Squat</th>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Bench</th>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Deadlift</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <th>Squat</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <th>Bench</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <th>Deadlift</th>}
                     {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <th>BW</th>}
-                    <th>Totale</th>
+                    {sortBy !== 'ipfPointsDesc' && <th>Totale</th>}
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
+                    {sortBy === 'ipfPointsDesc' && <th>IPF Points</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -89,13 +103,16 @@ const LeaderboardWithSorting = ({ data }) => {
                       <td className="position-name">
                         <span className="position">{index + 1}.</span> {item.username}
                       </td>
-                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.s}</td>}
-                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.b}</td>}
-                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <td>{item.d}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <td>{item.s}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <td>{item.b}</td>}
+                      {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && sortBy !== 'ipfPointsDesc' && <td>{item.d}</td>}
                       {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <td className="bw">{item.bw}</td>}
-                      <td className="total">{item.total}</td>
+                      {sortBy !== 'ipfPointsDesc' && <td className="total">{item.total}</td>}
                       {sortBy === 'ratioDesc' && (
                         <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                      )}
+                      {sortBy === 'ipfPointsDesc' && (
+                        <td>{calculateIPFPoints(item.total, parseFloat(item.bw), item.gender).toFixed(2)}</td>
                       )}
                     </tr>
                   ))}
