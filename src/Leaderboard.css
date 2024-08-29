@@ -71,6 +71,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
+  font-size: 12px;
 }
 .leaderboard-table td {
   padding: 10px;
@@ -78,6 +79,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
+  font-size: 12px;
 }
 .leaderboard-table tr:nth-child(even) {
   background-color: #111;
