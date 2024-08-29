@@ -5,28 +5,28 @@ const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
 
   const calculateIPFPoints = (total, bw, gender) => {
-    if (!gender || (gender !== 'M' && gender !== 'F') || !total || !bw) {
-      return 0;
-    }
+  if (!gender || (gender !== 'M' && gender !== 'F') || !total || !bw) {
+    return 0;
+  }
 
-    const ln = Math.log;
-    let c1, c2, c3, c4;
+  let A, B, C;
 
-    if (gender === 'M') {
-      c1 = 310.67;
-      c2 = 857.785;
-      c3 = 53.216;
-      c4 = 147.0835;
-    } else {
-      c1 = 125.1435;
-      c2 = 228.03;
-      c3 = 34.5246;
-      c4 = 86.8301;
-    }
+  if (gender === 'M') {
+    A = 1199.72839;
+    B = 1025.18162;
+    C = 0.00921;
+  } else {
+    A = 610.32796;
+    B = 1045.59282;
+    C = 0.03048;
+  }
 
-    return 500 + 100 * ((total - (c1 * ln(bw) - c2)) / (c3 * ln(bw) - c4));
+  const coefficient = 100 / (A - B * Math.exp(-C * bw));
+  const points = coefficient * total;
+
+  return points > 0 ? points : 0;
   };
-
+  
   const sortedAndGroupedData = useMemo(() => {
     const sorted = [...data].sort((a, b) => {
       switch (sortBy) {
