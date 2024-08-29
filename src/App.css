@@ -264,15 +264,13 @@ body {
   position: relative;
 }
 
-.gender-input::after {
-  content: '\25BC';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  color: #ff4136;
-  pointer-events: none;
-  font-size: 12px;
+.gender-select::-webkit-inner-spin-button,
+.gender-select::-webkit-outer-spin-button,
+.gender-select::-webkit-search-decoration,
+.gender-select::-webkit-search-cancel-button,
+.gender-select::-webkit-search-results-button,
+.gender-select::-webkit-search-results-decoration {
+  -webkit-appearance: none;
 }
 
 .save-button {
