@@ -43,7 +43,7 @@ body {
   margin-bottom: 5px;
 }
 
-.number-input {
+.number-input, gender-select {
   padding: 10px;
   width: 80px;
   margin: 5px 0;
@@ -245,15 +245,6 @@ body {
 }
 
 .gender-select {
-  width: 80%;
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #ff4136;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 16px;
   appearance: none; /* Rimuove lo stile predefinito del browser */
   -webkit-appearance: none;
   -moz-appearance: none;
