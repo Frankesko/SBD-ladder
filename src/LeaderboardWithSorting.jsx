@@ -76,7 +76,7 @@ const LeaderboardWithSorting = ({ data }) => {
             <option value="bwDesc">Categoria</option>
             <option value="totalDesc">Totale</option>
             <option value="ratioDesc">Totale/BW</option>
-            /* <option value="ipfDesc">IPF Points</option> */
+            
           </select>
         </div>
         <div className="table-wrapper">
