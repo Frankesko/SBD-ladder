@@ -108,7 +108,7 @@
   font-weight: bold;
 }
 .leaderboard-table th:nth-child(1), 
-.leaderboard-table td:nth-child(1) { width: 40%; } /* pos + nome */
+.leaderboard-table td:nth-child(1) { width: 50%; } /* pos + nome */
 .leaderboard-table th:nth-child(2),
 .leaderboard-table th:nth-child(3),
 .leaderboard-table th:nth-child(4),
@@ -120,4 +120,4 @@
 .leaderboard-table th:nth-child(6),
 .leaderboard-table td:nth-child(6) { width: 15%; } /* totale */
 .leaderboard-table th:nth-child(7),
-.leaderboard-table td:nth-child(7) { width:  15%; } /* t/bw */
+.leaderboard-table td:nth-child(7) { width: 15%; } /* t/bw */
