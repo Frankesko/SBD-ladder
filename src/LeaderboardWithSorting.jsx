@@ -5,42 +5,53 @@ const LeaderboardWithSorting = ({ data }) => {
   const [sortBy, setSortBy] = useState('totalDesc');
 
   const calculateIPFPoints = (total, bw, gender) => {
-    if (!gender || (gender !== 'M' && gender !== 'F')) {
+    if (!gender || (gender !== 'M' && gender !== 'F') || !total || !bw) {
       return 0;
     }
 
     const ln = Math.log;
+    let c1, c2, c3, c4;
+
     if (gender === 'M') {
-      return 500 + 100 * ((total - (310.6700 * ln(bw) - 857.7850)) / (53.2160 * ln(bw) - 147.0835));
+      c1 = 310.67;
+      c2 = 857.785;
+      c3 = 53.216;
+      c4 = 147.0835;
     } else {
-      return 500 + 100 * ((total - (125.1435 * ln(bw) - 228.0300)) / (34.5246 * ln(bw) - 86.8301));
+      c1 = 125.1435;
+      c2 = 228.03;
+      c3 = 34.5246;
+      c4 = 86.8301;
     }
+
+    return 500 + 100 * ((total - (c1 * ln(bw) - c2)) / (c3 * ln(bw) - c4));
   };
 
   const sortedAndGroupedData = useMemo(() => {
     const sorted = [...data].sort((a, b) => {
       switch (sortBy) {
         case 'sDesc':
-          return b.s - a.s;
+          return parseFloat(b.s) - parseFloat(a.s);
         case 'bDesc':
-          return b.b - a.b;
+          return parseFloat(b.b) - parseFloat(a.b);
         case 'dDesc':
-          return b.d - a.d;
+          return parseFloat(b.d) - parseFloat(a.d);
         case 'bwDesc':
           const categoryA = Math.floor(parseFloat(a.bw) / 10) * 10;
           const categoryB = Math.floor(parseFloat(b.bw) / 10) * 10;
           if (categoryA === categoryB) {
-            return b.total - a.total;
+            return parseFloat(b.total) - parseFloat(a.total);
           }
           return categoryA - categoryB;
         case 'totalDesc':
-          return b.total - a.total;
+          return parseFloat(b.total) - parseFloat(a.total);
         case 'ratioDesc':
-          return b.total / parseFloat(b.bw) - a.total / parseFloat(a.bw);
+          return parseFloat(b.total) / parseFloat(b.bw) - parseFloat(a.total) / parseFloat(a.bw);
         case 'ipfDesc':
-          return calculateIPFPoints(b.total, parseFloat(b.bw), b.gender) - calculateIPFPoints(a.total, parseFloat(a.bw), a.gender);
+          return calculateIPFPoints(parseFloat(b.total), parseFloat(b.bw), b.gender) - 
+                 calculateIPFPoints(parseFloat(a.total), parseFloat(a.bw), a.gender);
         default:
-          return b.total - a.total;
+          return parseFloat(b.total) - parseFloat(a.total);
       }
     });
 
@@ -112,10 +123,10 @@ const LeaderboardWithSorting = ({ data }) => {
                       {(sortBy === 'ratioDesc' || sortBy === 'bwDesc' || sortBy === 'ipfDesc') && <td className="bw">{item.bw}</td>}
                       {sortBy !== 'ipfDesc' && <td className="total">{item.total}</td>}
                       {sortBy === 'ratioDesc' && (
-                        <td>{(item.total / parseFloat(item.bw)).toFixed(2)}</td>
+                        <td>{(parseFloat(item.total) / parseFloat(item.bw)).toFixed(2)}</td>
                       )}
                       {sortBy === 'ipfDesc' && (
-                        <td>{calculateIPFPoints(item.total, parseFloat(item.bw), item.gender).toFixed(2)}</td>
+                        <td>{calculateIPFPoints(parseFloat(item.total), parseFloat(item.bw), item.gender).toFixed(2)}</td>
                       )}
                     </tr>
                   ))}
