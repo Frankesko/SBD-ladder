@@ -75,9 +75,9 @@ const LeaderboardWithSorting = ({ data }) => {
                 <thead>
                   <tr>
                     <th className="position-name">Nome</th>
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>S</th>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>B</th>}
-                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>D</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Squat</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Bench</th>}
+                    {sortBy !== 'ratioDesc' && sortBy !== 'bwDesc' && <th>Deadlift</th>}
                     {(sortBy === 'ratioDesc' || sortBy === 'bwDesc') && <th>BW</th>}
                     <th>T</th>
                     {sortBy === 'ratioDesc' && <th>T/BW</th>}
